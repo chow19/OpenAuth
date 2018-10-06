@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0BBF2D65-FFFD-4272-B138-8EA4FB6FEC48}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OpenAuth.App</RootNamespace>
+    <AssemblyName>OpenAuth.App</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mvc5.3.3.4\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NPOI, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\FunctionTest\bin\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AuthoriseService.cs" />
+    <Compile Include="AutofacExt.cs" />
+    <Compile Include="BaseApp.cs" />
+    <Compile Include="AuthorizeApp.cs" />
+    <Compile Include="DingDing\DDBase.cs" />
+    <Compile Include="DingDing\DDHelper.cs" />
+    <Compile Include="DingDing\Dept\Request\CreateDeptRequest.cs" />
+    <Compile Include="DingDing\Dept\Request\DelDeptRequest.cs" />
+    <Compile Include="DingDing\Dept\Request\GetDeptRequest.cs" />
+    <Compile Include="DingDing\Dept\Request\UpdateDeptRequest.cs" />
+    <Compile Include="DingDing\Dept\Respon\DelDeptRespon.cs" />
+    <Compile Include="DingDing\Dept\Respon\CreateDeptRespon.cs" />
+    <Compile Include="DingDing\Dept\Respon\GetDeptListRespon.cs" />
+    <Compile Include="DingDing\Dept\Respon\GetDeptRespon.cs" />
+    <Compile Include="DingDing\Dept\Respon\UpdateDeptRespon.cs" />
+    <Compile Include="DingDing\Message\Request\MessageCorpconversationAsyncsendbycodeRequest.cs" />
+    <Compile Include="DingDing\Message\Request\MessageCorpconversationAsyncsendRequest.cs" />
+    <Compile Include="DingDing\Message\Request\MessageCorpconversationAsyncsendV2Request.cs" />
+    <Compile Include="DingDing\Message\Request\MessageCorpconversationSendRequest.cs" />
+    <Compile Include="DingDing\Message\Response\MessageCorpconversationAsyncsendbycodeResponse.cs" />
+    <Compile Include="DingDing\Message\Response\MessageCorpconversationAsyncsendResponse.cs" />
+    <Compile Include="DingDing\Message\Response\MessageCorpconversationAsyncsendV2Response.cs" />
+    <Compile Include="DingDing\Message\Response\MessageCorpconversationSendResponse.cs" />
+    <Compile Include="DingDing\MyDictionary.cs" />
+    <Compile Include="DingDing\DingDingService.cs" />
+    <Compile Include="DingDing\Model\DDResultModel.cs" />
+    <Compile Include="DingDing\User\Request\CreateUserRequest.cs" />
+    <Compile Include="DingDing\User\Request\GetUserRequest.cs" />
+    <Compile Include="DingDing\User\Request\UpdateUserRequest.cs" />
+    <Compile Include="DingDing\User\Request\UserDeleteRequest.cs" />
+    <Compile Include="DingDing\User\Response\CreateUserResponse.cs" />
+    <Compile Include="DingDing\User\Response\GetUserListResponse.cs" />
+    <Compile Include="DingDing\User\Request\GetUserListRequest.cs" />
+    <Compile Include="DingDing\User\Response\GetUserResponse.cs" />
+    <Compile Include="DingDing\User\Response\UpdateUserResponse.cs" />
+    <Compile Include="DingDing\User\Response\UserDeleteResponse.cs" />
+    <Compile Include="Kindee\ICMOBomInfoApp.cs" />
+    <Compile Include="Kindee\ICMOInfoApp.cs" />
+    <Compile Include="Kindee\KindeeBaseApp.cs" />
+    <Compile Include="Kindee\UserApp.cs" />
+    <Compile Include="MessageApp.cs" />
+    <Compile Include="OldAJD\A_PBOMApp.cs" />
+    <Compile Include="OldAJD\A_PBOMEntryApp.cs" />
+    <Compile Include="OldAJD\OldBaseApp.cs" />
+    <Compile Include="OldAJD\PMC_MasterProductScheduleApp.cs" />
+    <Compile Include="OldAJD\PMC_MasterProductScheduleBOMApp.cs" />
+    <Compile Include="OldAJD\ProductFeedOrderApp.cs" />
+    <Compile Include="OldAJD\SchemeApp.cs" />
+    <Compile Include="OldAJD\SEOrderApp.cs" />
+    <Compile Include="Other_UserManageApp.cs" />
+    <Compile Include="Request\Areas\QueryProFeedOrder.cs" />
+    <Compile Include="Request\QueryAppListReq.cs" />
+    <Compile Include="AppManager.cs" />
+    <Compile Include="ResourceApp.cs" />
+    <Compile Include="CategoryApp.cs" />
+    <Compile Include="Define.cs" />
+    <Compile Include="Flow\FlowRuntime.cs" />
+    <Compile Include="Flow\FlowRuntimeModel.cs" />
+    <Compile Include="Flow\FlowLine.cs" />
+    <Compile Include="Flow\FlowNode.cs" />
+    <Compile Include="FormApp.cs" />
+    <Compile Include="Request\IdPageReq.cs" />
+    <Compile Include="Request\PageReq.cs" />
+    <Compile Include="Request\QueryResourcesReq.cs" />
+    <Compile Include="Request\QueryCategoriesReq.cs" />
+    <Compile Include="Request\QueryFlowInstanceListReq.cs" />
+    <Compile Include="Request\QueryFlowSchemeListReq.cs" />
+    <Compile Include="Request\QueryRoleListReq.cs" />
+    <Compile Include="Request\QueryFormListReq.cs" />
+    <Compile Include="Request\QueryUserListReq.cs" />
+    <Compile Include="Request\VerificationReq.cs" />
+    <Compile Include="Response\FlowVerificationResp.cs" />
+    <Compile Include="Response\FormResp.cs" />
+    <Compile Include="Response\TableData.cs" />
+    <Compile Include="RevelanceManagerApp.cs" />
+    <Compile Include="SSO\DDDeptSync.cs" />
+    <Compile Include="SSO\DDUserSync.cs" />
+    <Compile Include="SSO\JobHandlerUtil.cs" />
+    <Compile Include="SystemAuthService.cs" />
+    <Compile Include="RoleApp.cs" />
+    <Compile Include="FlowInstanceApp.cs" />
+    <Compile Include="FlowSchemeApp.cs" />
+    <Compile Include="ModuleManagerApp.cs" />
+    <Compile Include="SSO\AppInfo.cs" />
+    <Compile Include="SSO\AppInfoService.cs" />
+    <Compile Include="SSO\AuthUtil.cs" />
+    <Compile Include="SSO\PassportLoginRequest.cs" />
+    <Compile Include="SSO\SSOAuthUtil.cs" />
+    <Compile Include="SSO\SSOController.cs" />
+    <Compile Include="SSO\LoginResult.cs" />
+    <Compile Include="SSO\SSOAuthAttribute.cs" />
+    <Compile Include="SSO\UserAuthSession.cs" />
+    <Compile Include="TaskApp.cs" />
+    <Compile Include="UserManagerApp.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="OrgManagerApp.cs" />
+    <Compile Include="Response\UserWithAccessedCtrls.cs" />
+    <Compile Include="Response\ModuleElementVM.cs" />
+    <Compile Include="Response\ModuleView.cs" />
+    <Compile Include="Response\RoleView.cs" />
+    <Compile Include="Response\UserView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{5FEAEC9A-4F1E-4EE7-B377-9DB1B0870DAC}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenAuth.Repository\OpenAuth.Repository.csproj">
+      <Project>{e8df8dea-e2cf-4bdb-8f4f-3f8205b0e03a}</Project>
+      <Name>OpenAuth.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FormUtil.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

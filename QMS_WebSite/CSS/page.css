@@ -1,0 +1,13 @@
+#loading{position:absolute;left:50%;top:60px;z-index:99;}
+#loading,#loading .lbk,#loading .lcont{width:146px;height:146px;}
+#loading .lbk,#loading .lcont{position:relative;}
+#loading .lbk{background-color:#000;opacity:.5;border-radius:10px;margin:-73px 0 0 -73px;z-index:0;}
+#loading .lcont{margin:-146px 0 0 -73px;text-align:center;color:#f5f5f5;font-size:14px;line-height:35px;z-index:1;}
+#loading img{width:35px;height:35px;margin:30px auto;display:block;}
+
+.all_shown {
+	text-align:center;
+	padding:15px 0;
+	color:#999;
+	display:none;
+}

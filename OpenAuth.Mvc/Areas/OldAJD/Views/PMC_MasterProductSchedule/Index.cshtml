@@ -1,0 +1,185 @@
+﻿@section header
+{
+    <link rel="stylesheet" href="/css/treetable.css" />
+}
+
+<blockquote class="layui-elem-quote news_search toolList" id="menus"></blockquote>
+
+<div class="layui-row">
+    <div class="layui-col-xs3">
+        <div class="layui-row">
+            <div class="layui-col-xs10">
+                <input type="text" placeholder="请输入关键字" value="" class="layui-input" id="searchKey">
+            </div>
+            <div class="layui-col-xs2">
+                <input type="checkbox" name="close" value="1" id="closedOnly" checked="checked">
+            </div>
+        </div>
+
+        <table class="layui-table"
+               lay-data="{height: 'full-80', page:true, id:'leftMainList',limits:[30,50,90,150], limit:50}"
+               lay-filter="list" lay-size="sm" lay-even>
+            <thead>
+                <tr>
+                    <th lay-data="{fixed: 'left', width:70, align:'center', toolbar: '#barList'}"></th>
+                    <th lay-data="{field:'SEOrder', width:150, sort: true, fixed: true, templet: '#headcolorTpl'}">订单号</th>
+                    <th lay-data="{field:'SEOrderEntry', width:70}">行号</th>
+                    <th lay-data="{field:'FName', width:205}">物料名称</th>
+                    <th lay-data="{field:'FNumber', width:100}">物料编码</th>
+                    <th lay-data="{field:'DealLine', width:100}">整单交期</th>
+                    <th lay-data="{field:'AuxQty', width:100}">成品数量</th>
+                    <th lay-data="{field:'IsOK', width:70}">是否关闭</th>
+                    <th lay-data="{field:'Id', width:70}">Id</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="layui-col-xs7">
+        <div class="layui-row layui-col-space3" style="margin-top:5px;margin-bottom:5px;margin-left:5px;word-break:break-word;background-color:lightgray">
+            <div class="layui-col-xs12">
+                <div class="layui-row">
+                    <div class="layui-col-xs12">
+                        <h2 style="text-align:center">生产投料单</h2>
+                    </div>
+                </div>
+                <div class="layui-row layui-col-space3">
+                    <div class="layui-col-xs1">
+                        销售订单号:
+                    </div>
+                    <div class="layui-col-xs5">
+                        <label id="BillNo"></label>
+                        <input type="hidden" id="FEntryID" />
+                    </div>
+                    <div class="layui-col-xs1">
+                        客户:
+                    </div>
+                    <div class="layui-col-xs5">
+                        <label id="CustomName"></label>
+                    </div>
+                </div>
+                <div class="layui-row layui-col-space3">
+                    <div class="layui-col-xs1">
+                        产品代码:
+                    </div>
+                    <div class="layui-col-xs5">
+                        <label id="FNumber"></label>
+                    </div>
+                    <div class="layui-col-xs1">
+                        产品名称:
+                    </div>
+                    <div class="layui-col-xs5">
+                        <label id="FName"></label>
+                    </div>
+                </div>
+                <div class="layui-row layui-col-space3">
+                    <div class="layui-col-xs1">
+                        整单交期:
+                    </div>
+                    <div class="layui-col-xs5">
+                        <label id="DealLine"></label>
+                    </div>
+                    <div class="layui-col-xs1">
+                        成品数量:
+                    </div>
+                    <div class="layui-col-xs5">
+                        <label id="AuxQty"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row layui-col-space3">
+            <div class="layui-col-xs12 ">
+                <table class="layui-table" lay-even
+                       lay-data="{height: 'full-200', page:true, id:'rightMainList'}"
+                       lay-filter="list" lay-size="sm">
+                    <thead>
+                        <tr>
+                            <th lay-data="{fixed: 'left',field:'FNumber', width:150}">物料代码</th>
+                            <th lay-data="{field:'FName', width:150}">物料名称</th>
+                            <th lay-data="{field:'ReqQty', width:135}">计划投料数量</th>
+
+                            <th lay-data="{field:'OweQty', width:80,templet: '#QtycolorTpl'}">欠领数</th>
+                            <th lay-data="{field:'ReceivedQty', width:180}">已领数量</th>
+                            <th lay-data="{field:'StockQty', width:180}">即时库存</th>
+                            <th lay-data="{field:'LastModifyTime', width:180}">上次更新时间</th>
+                            <th lay-data="{field:'IsOK', width:180}">是否关闭</th>
+                            <th lay-data="{field:'OKDate', width:180}">关闭时间</th>
+                            <th lay-data="{fixed: 'right', width:100, toolbar: '#barListRight'}"></th>
+                        </tr>
+                    </thead>
+                </table>
+                <!--列表右边的按钮-->
+                <script type="text/html" id="barListRight">
+                    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="showTotal">查看统计</a>
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-col-xs">
+        <!--统计列表-->
+        <label id="totalmsg"></label>;
+        @*<label for="StoreQtyTitle">即时库存：</label><label id="StoreQty"></label>*@
+
+        <table class="layui-table"
+               lay-data="{height: 'full-80', id:'totalList',totalRow: true}"
+               lay-filter="totalList" lay-size="sm">
+            <thead>
+                <tr>
+                    <th lay-data="{field:'SEOrder', width:150, sort: true,totalRowText: '合计' }">销售订单</th>
+                    <th lay-data="{field:'OweQty', width:80, sort: true,totalRow: true}">欠领</th>
+                    @*<th lay-data="{field:'ReceivedQty', width:50, totalRow: true}">已领</th>*@
+                    <th lay-data="{field:'ReqQty', width:80,  sort: true, totalRow: true}">需求</th>
+                </tr>
+            </thead>
+        </table>
+
+        @*<script type="text/html" id="menuTpl">
+                <button class="layui-btn layui-btn-xs {{ d.Class }} layui-btn-fluid" alt="{{ d.DomId }}">{{ d.Name }}</button>
+            </script>*@
+    </div>
+</div>
+
+<script type="text/html" id="barList">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="ShowDetail">查看</a>
+</script>
+
+<!--用户查询窗口-->
+<div id="divQuery" style="display: none"> 
+        <input type="text" placeholder="请输入物料编号" id="FNumber2" />
+          <button class="layui-btn" id="btnQuery">查询</button>
+
+        <!--统计列表-->
+        <label id="totalmsg2"></label>; 
+        <table class="layui-table"
+               lay-data="{height: 'full-80', id:'totalList2',totalRow: true}"
+               lay-filter="totalList" lay-size="sm">
+            <thead>
+                <tr>
+                    <th lay-data="{field:'SEOrder', width:150, sort: true,totalRowText: '合计' }">销售订单</th>
+                    <th lay-data="{field:'OweQty', width:80, sort: true,totalRow: true}">欠领</th>
+                    <th lay-data="{field:'ReceivedQty', width:80, totalRow: true}">已领</th>
+                    <th lay-data="{field:'ReqQty', width:80,  sort: true, totalRow: true}">需求</th>
+                </tr>
+            </thead>
+        </table> 
+</div>
+
+<script type="text/html" id="headcolorTpl">
+    {{#  if(d.IsOK ===true){ }}
+    {{d.SEOrder}}
+    {{#  } else { }}
+    <span style="color:red">{{d.SEOrder}} </span>
+    {{#  } }}
+</script>
+
+<script type="text/html" id="QtycolorTpl">
+    {{#  if(d.IsOK ===true){ }}
+    {{d.OweQty}}
+    {{#  } else { }}
+    <span style="color:red">{{d.OweQty}} </span>
+    {{#  } }}
+</script>
+
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/userJs/Areas/OldAJD/PMC_MasterProductSchedule.js"></script> 

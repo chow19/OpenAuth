@@ -1,0 +1,1048 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>钉钉测试</title>
+</head>
+<body>
+    <h2 id="notice">免登陆中。。</h2>
+    <script src="//cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="http://g.alicdn.com/dingding/open-develop/1.6.9/dingtalk.js?2"></script>
+    @*<script src="~/js/dingtalk.js"></script>*@
+    <script type="text/javascript">
+
+        var _config = [];
+        _config.agentId = "@ViewBag.AgentId";
+        _config.corpId = "@ViewBag.CorpId";
+        _config.timeStamp = "@ViewBag.TimeStamp";
+        _config.nonceStr = "@ViewBag.NonceStr";
+        _config.signature = "@ViewBag.Signature";
+        $(function () {
+            dd.config({
+                agentId: _config.agentId,
+                corpId: _config.corpId,
+                timeStamp: _config.timeStamp,
+                nonceStr: _config.nonceStr,
+                signature: _config.signature,
+                jsApiList: ['runtime.info',
+                    '​biz.util.scanCard​',
+                    'biz.user.get',
+                    'biz.contact.choose',
+                    'biz.telephone.call', 'biz.telephone.showCallMenu',
+                    'biz.ding.post',
+                    'device.geolocation.get',
+                    'device.geolocation.start',
+                    'device.geolocation.stop',
+                    'biz.map.locate​',
+                    'biz.map.view​',
+                    'device.launcher.launchApp',
+                    'biz.util.open',
+                    'biz.util.uploadImage',
+                    'biz.clipboardData.setData​',
+                    '​biz.util.uploadImageFromCamera​',
+                    'biz.ding.create',
+                    'biz.alipay.pay',
+                    'biz.util.encrypt',
+                    'biz.util.decrypt',
+                    'biz.contact.departmentsPicker',
+                    'biz.contact.chooseMobileContacts​',
+                    'biz.customContact.multipleChoose',
+                    'biz.customContact.choose',
+                    'biz.contact.complexPicker',
+                    'biz.contact.externalComplexPicker',
+                    'biz.contact.externalEditForm',
+                    'biz.contact.createGroup​',
+                    '​biz.chat.pickConversation​',
+                    'biz.chat.chooseConversationByCorpId',
+                    'biz.chat.openSingleChat',
+                    'biz.alipay.pay'
+                ]
+            });
+        });
+        
+         
+        dd.ready(function () {
+            var userId = "";
+
+            // 退到后台的事件监听(webview)
+            document.addEventListener('pause', function (e) {
+                e.preventDefault();
+                console.log('事件：pause')
+            }, false);
+
+            // 页面被唤醒的事件监听(webview)
+            document.addEventListener('resume', function (e) {
+                e.preventDefault();
+                console.log('事件：resume')
+            }, false);
+
+
+            //返回按钮点击的事件监听(android)
+            document.addEventListener('backbutton', function (e) {
+                e.preventDefault();
+                console.log('事件：backbutton')
+            }, false);
+
+            // 网络连接成功的事件监听
+            document.addEventListener('online', function (e) {
+                e.preventDefault();
+                console.log('事件：online')
+            }, false);
+
+            // 网络连接断开的事件监听
+            document.addEventListener('offline', function (e) {
+                e.preventDefault();
+                console.log('事件：offline')
+            }, false);
+
+            try {
+                dd.runtime.info({
+                    onSuccess: function (info) {
+                        logger.e('runtime info: ' + JSON.stringify(info));
+                    },
+                    onFail: function (err) {
+                        logger.e('fail: ' + JSON.stringify(err));
+                    }
+                });
+
+                dd.runtime.permission.requestAuthCode(
+               {
+                   corpId: _config.corpId,
+                   onSuccess: function (info) {//成功获得code值,code值在info中
+                       $.ajax({
+                           url: '@Url.Action("GetUserInfo", "DingDing")?code=' + info.code + '&accessToken=@ViewBag.AccessToken',//userinfo为本企业应用服务器后台处理程序
+                           type: 'GET',
+                           success: function (data, status, xhr) {
+                               var info = JSON.parse(data);
+                               if (info.errcode != 0) {
+                                   alert(data);
+                               } else {
+                                   $('#notice').text("欢迎您：" + info.name + "。成功获取免登信息");
+
+                                   //成功后自动跳转到SSO获取TOKEN
+                                   $.ajax({
+                                       url: "@Url.Action("GetSpecToken", "DingDing")?uid=" + info.userid,
+                                       type: "GET",
+                                       success: function (data, status, xhr) {
+                                           if (data.code==200) {
+                                               location.href = "/Mobile/DDMobile/Index";
+                                               return;
+                                           }
+                                       },
+                                       error: function (xhr, errorType, error) {
+                                           logger.e("尝试获取Token失败:" + error);
+                                       }
+                                   });
+                                      
+                                   //var htmlstr = "部门ID:" + info.department + ",钉Id:" + info.dingId + ",用户Id:" + info.userid;
+                                   //$("#showMsg").text(htmlstr);
+                                   //userId = info.userid;
+                               }
+                           },
+                           error: function (xhr, errorType, error) {
+                               logger.e("尝试获取用户信息失败:" + info.code);
+                           }
+                       });
+                   },
+                   onFail: function (err) {//获得code值失败
+                       alert('fail: ' + JSON.stringify(err));
+                   }
+               });
+
+                //dd.biz.util.datepicker({
+                //    format: 'yyyy-MM-dd',//注意：format只支持android系统规范，即2015-03-31格式为yyyy-MM-dd
+                //    value: '2015-04-17', //默认显示日期
+                //    onSuccess: function (result) {
+                //        alert(JSON.stringify(result));
+                //    },
+                //    onFail: function (err) { }
+                //})
+
+                $(".maplocation").on("click", function () {
+                    dd.biz.map.locate({
+                        latitude: 39, // 纬度，非必须
+                        longitude: 116, // 经度，非必须
+                        onSuccess: function (result) {
+                            alert(JSON.stringify(result));
+                        },
+                        onFail: function (err) {
+                            alert(JSON.stringify(err));
+                        }
+                    });
+                });
+
+                $(".getlocation").on("click", function () {
+                    dd.device.geolocation.get({
+                        targetAccuracy: 50,
+                        coordinate: 1,
+                        withReGeocode: false,
+                        useCache: false, //默认是true，如果需要频繁获取地理位置，请设置false
+                        onSuccess: function (result) {
+                            alert(JSON.stringify(result));
+                            //dd.biz.map.view({
+                            //    latitude: result.latitude, // 纬度
+                            //    longitude: result.longitude, // 经度
+                            //    title: "" // 地址/POI名称
+                            //});
+                        },
+                        onFail: function (err) {
+                            alert(JSON.stringify(err));
+                        }
+                    });
+                });
+
+                $(".openiosamap").on("click", function () {
+                    dd.device.launcher.launchApp({
+                        app: 'iosamap', //iOS:应用scheme;Android:应用包名
+                        activity: '', //仅限Android，打开指定Activity，可不传。如果为空，就打开App的Main入口Activity
+                        onSuccess: function (data) {
+
+                        },
+                        onFail: function (err) {
+                            alert(JSON.stringify(err));
+                        }
+                    });
+                });
+
+                $(".uiltopen").on("click", function () {
+                    dd.biz.util.open({
+                        name: 'profile',//页面名称
+                        params: { id: userId, corpId: _config.corpId },//传参
+                        onSuccess: function () {
+                            /**/
+                        },
+                        onFail: function (err) { alert(JSON.stringify(err)); }
+                    });
+                });
+
+                $(".openLink").on("click", function () {
+                    dd.biz.util.openLink({
+                        url: "http://www.dingtalk.com",//要打开链接的地址
+                        onSuccess: function (result) {
+                            /**/
+                        },
+                        onFail: function (err) { alert(JSON.stringify(err)); }
+                    })
+                });
+
+                $(".openModal").on("click", function () {
+                    dd.biz.util.openModal({
+                        size: 'middle',  // modal的尺寸
+                        url: '/Form', //打开modal的内容的url
+                        title: 'modal title', //顶部标题
+                        onSuccess: function (result) {
+                            /*
+                                 调用biz.navigation.quit接口进入onSuccess, result为调用biz.navigation.quit传入的数值
+                             */
+                        },
+                        onFail: function (err) {
+                            alert(JSON.stringify(err));
+                            /*
+                                tips:点击左上角关闭按钮会进入onFail
+                             */
+                        }
+                    })
+                });
+
+                $(".uploadImage").on("click", function () {
+                    dd.biz.util.uploadImage({
+                        compression: true,//(是否压缩，默认为true)
+                        multiple: false, //是否多选，默认false
+                        max: 3, //最多可选个数
+                        quality: 50, // 图片压缩质量,
+                        resize: 50, // 图片缩放率
+                        stickers: {   // 水印信息
+                            time: "08:35",
+                            dateWeather: "测试",
+                            username: "gao",
+                            address: "---"
+                        },
+                        onSuccess: function (result) {
+                            alert(JSON.stringify(result));
+                        },
+                        onFail: function (err) {
+                            alert(JSON.stringify(err));
+                        }
+                    })
+
+                })
+
+                $(".uploadImageFromCamera").on("click", function () {
+                     dd.biz.util.uploadImageFromCamera({
+                        compression: true,//(是否压缩，默认为true)
+                        quality: 50, // 图片压缩质量,
+                        resize: 50, // 图片缩放率
+                        stickers: {   // 水印信息
+                            time: "08:35",
+                            dateWeather: "测试",
+                            username: "gao",
+                            address: "----"
+                        },
+                        onSuccess: function (result) {
+
+                        },
+                        onFail: function (err) {
+                            alert(JSON.stringify(err));
+                        }
+                    });
+                    
+                })
+
+                $(".downloadFile").on("click", function () {
+                    dd.biz.util.downloadFile({
+                        url: 'http://www.xhgpc.cn/images/code.jpg', //要下载的文件的url
+                        name: '一个图片.jpg', //定义下载文件名字
+                        onProgress: function (msg) {
+                            // 文件下载进度回调
+                        },
+                        onSuccess: function (result) {
+                            /*
+                              true
+                            */
+                        },
+                        onFail: function () {
+                            alert(JSON.stringify(err));
+                        }
+                    });
+                })
+                //dd.biz.util.previewImage({
+                //    urls: [String],//图片地址列表
+                //    current: String,//当前显示的图片链接
+                //    onSuccess: function (result) {
+                //        /**/
+                //    },
+                //    onFail: function (err) { }
+                //})
+                //设置返回按钮
+                //dd.biz.navigation.setLeft({
+                //    show: true,//控制按钮显示， true 显示， false 隐藏， 默认true
+                //    control: true,//是否控制点击事件，true 控制，false 不控制， 默认false
+                //    showIcon: true,//是否显示icon，true 显示， false 不显示，默认true； 注：具体UI以客户端为准
+                //    text: '返回',//控制显示文本，空字符串表示显示默认文本
+                //    onSuccess: function (result) {
+                //        //如果control为true，则onSuccess将在发生按钮点击事件被回调
+                //        console.log('点击了返回按钮');
+                //        window.history.back();
+                //    },
+                //    onFail: function (err) { }
+                //});
+
+                $('.scanCard').on('click', function () {
+                    dd.biz.util.scanCard({ // 无需传参数
+                        onSuccess: function (data) {
+                            alert(JSON.stringify(data));
+                        },
+                        onFail: function (err) {
+                            alert(JSON.stringify(err));
+                        }
+                    })
+                });
+
+                $('.telephone').on('click', function () {
+                    dd.biz.telephone.call({
+                        users: ['17655214301730309841'], //用户列表，工号
+                        corpId: '', //企业id
+                        onSuccess: function () { },
+                        onFail: function () { alert(JSON.stringify(err)); }
+                    })
+                });
+                 
+                $('.showCallMenu').on('click', function () {
+                    dd.biz.telephone.showCallMenu({
+                        phoneNumber: $("#paramcontent").val(), // 期望拨打的电话号码
+                        code: '+86', // 国家代号，中国是+86
+                        showDingCall: true, // 是否显示钉钉电话
+                        onSuccess: function () { },
+                        onFail: function () { alert(JSON.stringify(err)); }
+                    })
+                });
+
+                $('.createding').on('click', function () {
+                    dd.biz.ding.create({
+                        users: ['17655214301730309841'],// 用户列表，工号
+                        corpId: _config.corpId, // 企业id
+                        type: 1, // 附件类型 1：image  2：link
+                        alertType: 2, // 钉发送方式 0:电话, 1:短信, 2:应用内
+                        alertDate: { "format": "yyyy-MM-dd HH:mm", "value": "2018-08-09 08:00" },
+                        attachment: {
+                            images: [''],
+                        }, // 附件信息
+                        text: 'hahaha',  // 正文
+                        bizType: 0, // 业务类型 0：通知DING；1：任务；2：会议；
+                        confInfo: {
+                            bizSubType: 0, // 子业务类型如会议：0：预约会议；1：预约电话会议；2：预约视频会议；（注：目前只有会议才有子业务类型）
+                            location: '某某会议室', //会议地点；（非必填）
+                            startTime: { "format": "yyyy-MM-dd HH:mm", "value": "2015-05-09 08:00" },// 会议开始时间
+                            endTime: { "format": "yyyy-MM-dd HH:mm", "value": "2015-05-09 08:00" }, // 会议结束时间
+                            remindMinutes: 30, // 会前提醒。单位分钟-1：不提醒；0：事件发生时提醒；5：提前5分钟；15：提前15分钟；30：提前30分钟；60：提前1个小时；1440：提前一天；
+                            remindType: 2 // 会议提前提醒方式。0:电话, 1:短信, 2:应用内
+                        },
+
+                        taskInfo: {
+                            ccUsers: ['17655214301730309841'], // 抄送用户列表，工号
+                            deadlineTime: { "format": "yyyy-MM-dd HH:mm", "value": "2015-05-09 08:00" }, // 任务截止时间
+                            taskRemind: 30// 任务提醒时间，单位分钟0：不提醒；15：提前15分钟；60：提前1个小时；180：提前3个小时；1440：提前一天；
+                        },
+                        onSuccess: function () {
+                            alert("发钉成功");
+                            //onSuccess将在点击发送之后调用
+                        },
+                        onFail: function () { alert(JSON.stringify(err)); }
+                    })
+
+                });
+
+                $('.complexPicker').on('click', function () {
+                    dd.biz.contact.complexPicker({
+                        title: "测试标题",            //标题
+                        corpId: _config.corpId,              //企业的corpId
+                        multiple: true,            //是否多选
+                        limitTips: "超出了",          //超过限定人数返回提示
+                        maxUsers: 50,            //最大可选人数
+                        pickedUsers: [],            //已选用户
+                        pickedDepartments: [],          //已选部门
+                        disabledUsers: [],            //不可选用户
+                        disabledDepartments: [],        //不可选部门
+                        requiredUsers: [],            //必选用户（不可取消选中状态）
+                        requiredDepartments: [],        //必选部门（不可取消选中状态）
+                        appId: _config.agentId,              //微应用的Id
+                        permissionType: "",          //可添加权限校验，选人权限，目前只有GLOBAL这个参数
+                        responseUserOnly: false,        //返回人，或者返回人和部门
+                        startWithDepartmentId: 0,   // 0表示从企业最上层开始
+                        onSuccess: function (result) {
+
+                            /**
+                            {
+                                selectedCount:1,                              //选择人数
+                                users:[{"name":"","avatar":"","emplId":""}]，//返回选人的列表，列表中的对象包含name（用户名），avatar（用户头像），emplId（用户工号）三个字段
+                                departments:[{"id":,"name":"","number":}]//返回已选部门列表，列表中每个对象包含id（部门id）、name（部门名称）、number（部门人数）
+                            }
+                            */
+                        },
+                        onFail: function (err) {
+                            alert("error");
+                        }
+                    });
+                });
+
+                $('.departmentsPicker').on('click', function () {
+                    dd.biz.contact.departmentsPicker({
+                        title: "测试标题",            //标题
+                        corpId: "xxx",              //企业的corpId
+                        multiple: true,            //是否多选
+                        limitTips: "超出了",          //超过限定人数返回提示
+                        maxDepartments: 100,            //最大选择部门数量
+                        pickedDepartments: [],          //已选部门
+                        disabledDepartments: [],        //不可选部门
+                        requiredDepartments: [],        //必选部门（不可取消选中状态）
+                        appId: 158,              //微应用的Id
+                        permissionType: "xxx",          //选人权限，目前只有GLOBAL这个参数
+                        onSuccess: function (result) {
+                            /**
+                            {
+                                userCount:1,                              //选择人数
+                                departmentsCount:1，//选择的部门数量
+                                departments:[{"id":,"name":"","number":}]//返回已选部门列表，列表中每个对象包含id（部门id）、name（部门名称）、number（部门人数）
+                            }
+                            */
+                        },
+                        onFail: function (err) {
+                            alert("error");
+                        }
+                    });
+                });
+                 
+                $('.createGroup').on('click', function () {
+                    dd.biz.contact.createGroup({
+                        corpId: _config.corpId, //企业id，可选，若配置必须是用户所属企业的corpId，即实现在指定企业创建群聊天；
+                        users: ['17655214301730309841',
+                                '196406073621622504'], //默认选中的用户工号列表，可选；使用此参数必须指定corpId
+                        onSuccess: function (result) {
+                            /*{
+                                id: 123   //企业群id
+                            }*/
+                        },
+                        onFail: function (err) {
+                            alert(JSON.stringify(err));
+                        }
+                    });
+                });
+                 
+                $('.chooseMobileContacts').on('click', function () {
+                    dd.biz.contact.chooseMobileContacts({
+                        multiple: true, //是否多选： true多选 false单选； 默认true
+                        maxUsers: 50, //人数限制，当multiple为true才生效，可选范围1-1500
+                        limitTips: "超过人数", //超过人数限制的提示语可以用这个字段自定义
+                        title: "选择手机联系人", // 如果你需要修改选人页面的title，可以在这里赋值
+                        onSuccess: function (data) {
+
+                        },
+                        onFail: function (err) {
+                            alert(JSON.stringify(err));
+                        }
+                    });
+                });
+
+                $('.externalComplexPicker').on('click', function () {
+                    dd.biz.contact.externalComplexPicker({
+                        "title": "选择外部联系人",
+                        "corpId": _config.corpId,
+                        "multiple": true, //是否多选  true多选，false单选，默认是单选
+                        "limitTips": "超出了",
+                        "maxUsers": 1000, //默认不限制
+                        "pickedUsers": [],  //已选，但可取消，只针对多选生效
+                        "disabledUsers": [], //不可选，，只针对多选生效
+                        "requiredUsers": [], //必选，只针对多选生效
+                        onSuccess: function (data) {
+                            /* data结构
+                              [
+                                {
+                                    "emplId":"123",//选人的员工id
+                                    "name":"name",//员工姓名
+                                    "avatar":"avatarURL",//头像url
+                                    "orgName":"org"//公司名字
+                                },
+                               ...
+                              ]
+                            */
+                        },
+                        onFail: function (err) { alert(JSON.stringify(err)); }
+                    });
+                });
+
+                $('.pickConversation').on('click', function () {
+                    dd.biz.chat.pickConversation({
+                        corpId: _config.corpId, //企业id,必须是用户所属的企业的corpid
+                        isConfirm: 'true', //是否弹出确认窗口，默认为true
+                        onSuccess: function (data) {
+                            //onSuccess将在选择结束之后调用
+                            // 该cid和服务端开发文档-普通会话消息接口配合使用，而且只能使用一次，之后将失效
+                            /*{
+                                cid: 'xxxx',
+                                title:'xxx'
+                            }*/
+                            alert(JSON.stringify(data))
+                        },
+                        onFail: function (err) { alert(JSON.stringify(err)); }
+                    })
+                });
+
+                $('.chooseConversationByCorpId').on('click', function () {
+                    dd.biz.chat.chooseConversationByCorpId({
+                        corpId: _config.corpId, //企业id,必须是用户所属的企业的corpid
+                        onSuccess: function (data) {
+                            //onSuccess将在选择结束之后调用
+                            /*{
+                                chatId: 'xxxx',
+                                title:'xxx'
+                            }*/
+                            alert(JSON.stringify(data))
+                        },
+                        onFail: function (err) { alert(JSON.stringify(err)); }
+                    })
+                });
+ 
+                $('.openSingleChat').on('click', function () {
+                    dd.biz.chat.openSingleChat({
+                        corpId: _config.corpId, // 企业id,必须是用户所属的企业的corpid
+                        userId: '196406073621622504', // 用户的工号
+                        onSuccess: function (data) { alert(JSON.stringify(data)) },
+                        onFail: function (err) { alert(JSON.stringify(err)); }
+                    })
+                });
+
+                $('.alipaypay').on('click', function () {
+                    alert("没有开通移动支付");
+                    dd.biz.alipay.pay({
+                        info: 'partner="2088101568358171"&seller_id="xxx@alipay.com"&out_trade_no="0819145412-6177"&subject="测试"&body="测试测试"&total_fee="0.01"&notify_url="http://notify.msp.hk/notify.htm"&service="mobile.securitypay.pay"&payment_type="1"&_input_charset="utf-8"&it_b_pay="30m"&sign="lBBK%2F0w5LOajrMrji7DUgEqNjIhQbidR13GovA5r3TgIbNqv231yC1NksLdw%2Ba3JnfHXoXuet6XNNHtn7VE%2BeCoRO1O%2BR1KugLrQEZMtG5jmJIe2pbjm%2F3kb%2FuGkpG%2BwYQYI51%2BhA3YBbvZHVQBYveBqK%2Bh8mUyb7GM1HxWs9k4%3D"&sign_type="RSA"', // 订单信息，
+                        onSuccess: function (result) {
+                            //{
+                            //    memo: 'xxxx', // 保留参数，一般无内容
+                            //    result: 'xxxx', // 本次操作返回的结果数据
+                            //    resultStatus: '' // 本次操作的状态返回值，标识本次调用的结果
+                            //}
+                        },
+                        onFail: function (err) {
+                            alert(JSON.stringify(err));
+                        }
+                    });
+                });
+
+                $('.encrypt').on('click', function () {
+                    dd.biz.util.encrypt({
+                        corpId: _config.corpId,//必传,
+                        data: {//要加密的数据
+                            h: $("#paramcontent").val()
+                        },
+
+                        onSuccess: function (data) {
+                            $("#paramcontent").val(data.h)
+                        },
+                        onFail: function (err) {
+                            alert('encrypt err: ' + JSON.stringify(err));
+
+                        }
+                    });
+                });
+                 
+                $('.decrypt').on('click', function () {
+                    dd.biz.util.decrypt({
+                        corpId: _config.corpId,//必传,
+                        data: {
+                            h: $("#paramcontent").val()
+                        },
+
+                        onSuccess: function (data) {
+                            $("#paramcontent").val(data.h)
+                        },
+                        onFail: function (err) {
+                            alert('decrypt err: ' + JSON.stringify(err));
+
+                        }
+                    })
+                });
+
+                dd.ui.pullToRefresh.enable({
+                    onSuccess: function () {
+                    },
+                    onFail: function () {
+                    }
+                })
+               
+            } catch (e) {
+                alert('faile: ' + JSON.stringify(e));
+            }
+
+        });
+
+        dd.error(function (err) {
+            alert('dd error: ' + JSON.stringify(err));
+        });
+
+
+        function scanQR() {
+            try {
+                dd.biz.util.scan({
+                    type: "all", // type 为 all、qrCode、barCode，默认是all。
+                    onSuccess: function (data) {
+                        //onSuccess将在扫码成功之后回调
+                        /* data结构
+                          { 'text': String}
+                        */
+                        alert(data.text);
+                    },
+                    onFail: function (err) {
+                    }
+                });
+            } catch (e) {
+                alert('faile: ' + JSON.stringify(e));
+            }
+
+        }
+
+        function alertWindow() {
+            var opt = {};
+            var defaults = {
+                message: "测试",
+                title: "提示",//可传空
+                buttonName: "收到"
+            };
+            var options = $.extend(defaults, opt);
+            dd.device.notification.alert({
+                message: options.message,
+                title: options.title,//可传空
+                buttonName: options.buttonName,
+                onSuccess: function () {
+                    //onSuccess将在点击button之后回调
+                    /*回调*/
+                },
+                onFail: function (err) { }
+            });
+        }
+
+        function confirmWindow() {
+            dd.device.notification.confirm({
+                message: "你爱我吗",
+                title: "提示",
+                buttonLabels: ['爱', '不爱'],
+                onSuccess: function (result) {
+                    //onSuccess将在点击button之后回调
+                    /*
+                    {
+                        buttonIndex: 0 //被点击按钮的索引值，Number类型，从0开始
+                    }
+                    */
+                },
+                onFail: function (err) { }
+            });
+        }
+        function promptWindow() {
+            dd.device.notification.prompt({
+                message: "再说一遍？",
+                title: "提示",
+                defaultText: "默认提示",
+                buttonLabels: ['继续', '不玩了'],
+                onSuccess: function (result) {
+                    //onSuccess将在点击button之后回调
+                    /*
+                    {
+                        buttonIndex: 0, //被点击按钮的索引值，Number类型，从0开始
+                        value: '' //输入的值
+                    }
+                    */
+                },
+                onFail: function (err) { }
+            });
+        }
+
+        function showPreloader() {
+            dd.device.notification.showPreloader({
+                text: "使劲加载中..2秒自动关闭", //loading显示的字符，空表示不显示文字
+                showIcon: true, //是否显示icon，默认true
+                onSuccess: function (result) {
+                    setTimeout(function () { hidePreloader(); }, 2000);
+                },
+                onFail: function (err) { }
+            })
+        }
+
+        function hidePreloader() {
+            dd.device.notification.hidePreloader({
+                onSuccess: function (result) {
+                    /*{}*/
+                },
+                onFail: function (err) { }
+            })
+        }
+
+        function toast() {
+            dd.device.notification.toast({
+                icon: 'success', //icon样式，有success和error，默认为空
+                text: '这里测试咋', //提示信息
+                duration: 2, //显示持续时间，单位秒，默认按系统规范[android只有两种(<=2s >2s)]
+                delay: 0, //延迟显示，单位秒，默认0
+                onSuccess: function (result) {
+                    /*{}*/
+                },
+                onFail: function (err) { }
+            })
+        }
+
+        function option() {
+            dd.device.notification.actionSheet({
+                title: "谁是最棒哒？", //标题
+                cancelButton: '取消', //取消按钮文本
+                otherButtons: ["孙悟空", "猪八戒", "唐僧", "沙和尚"],
+                onSuccess: function (result) {
+                    //onSuccess将在点击button之后回调
+                    /*{
+                        buttonIndex: 0 //被点击按钮的索引值，Number，从0开始, 取消按钮为-1
+                    }*/
+                },
+                onFail: function (err) { }
+            })
+        }
+
+        function modal() {
+            dd.device.notification.modal({
+                image: "http://gw.alicdn.com/tps/i2/TB1SlYwGFXXXXXrXVXX9vKJ2XXX-2880-1560.jpg_200x200.jpg", // 标题图片地址
+                banner: ["http://gw.alicdn.com/tps/i2/TB1SlYwGFXXXXXrXVXX9vKJ2XXX-2880-1560.jpg_200x200.jpg"],   // 图片地址列表
+                title: "2.4版本更新", //标题
+                content: "1.功能更新2.功能更新;", //文本内容
+                buttonLabels: ["了解更多", "知道了"],// 最多两个按钮，至少有一个按钮
+                onSuccess: function (result) {
+                    //onSuccess将在点击button之后回调
+                    /*{
+                        buttonIndex: 0 //被点击按钮的索引值，Number，从0开始
+                    }*/
+                },
+                onFail: function (err) { }
+            })
+        }
+
+        function exmodal() {
+            dd.device.notification.extendModal({
+                cells: [
+                    {
+                        "image": "https://img.alicdn.com/tfs/TB1KzrwRFXXXXasXXXXXXXXXXXX-540-380.png",
+                        "title": "DEMO版本更新",
+                        "content": "图片尺寸是540x380;"
+                    },
+                    {
+                        "image": "https://img.alicdn.com/tfs/TB1KzrwRFXXXXasXXXXXXXXXXXX-540-380.png",
+                        "title": "DEMO版本更新",
+                        "content": "图片尺寸是540x380;"
+                    }
+                ],
+                buttonLabels: ["了解更多", "知道了"],// 最多两个按钮，至少有一个按钮。
+                onSuccess: function (result) {
+                    //onSuccess将在点击button之后回调
+                    /*{
+                        buttonIndex: 0 //被点击按钮的索引值，Number，从0开始
+                    }*/
+                },
+                onFail: function (err) { }
+            })
+        }
+        function MutliOption() {
+            var opt = {
+                options: ['选项1', '选项2', '选项3', '选项4'],
+                selectOption: ['选项3'],
+                onSuccess: function (result) {
+                    /* 返回用户选中的index数组，从0开始。 例如
+                         [ 2, 3 ]
+                    */
+                },
+                onFail: function () { }
+            };
+
+            dd.biz.util.multiSelect({
+                options: ['选项1', '选项2', '选项3', '选项4'],
+                selectOption: ['选项3'],
+                onSuccess: function (result) {
+                    /* 返回用户选中的index数组，从0开始。 例如
+                         [ 2, 3 ]
+                    */
+                },
+                onFail: function () { }
+            })
+        }
+
+        function notification() {
+            dd.device.notification.vibrate({
+                duration: 300, //震动时间，android可配置 iOS忽略
+                onSuccess: function (result) {
+
+                },
+                onFail: function (err) { }
+            })
+        }
+
+        function watchShake() {
+            dd.device.accelerometer.watchShake({
+                sensitivity: 20,//振动幅度，Number类型，加速度变化超过这个值后触发shake
+                frequency: 150,//采样间隔(毫秒)，Number类型，指每隔多长时间对加速度进行一次采样，然后对比前后变化，判断是否触发shake
+                callbackDelay: 3000,//触发『摇一摇』后的等待时间(毫秒)，Number类型，防止频繁调用
+                onSuccess: function (result) {
+                    /*
+                    {}
+                    */
+                    alert("|调用成功");
+                },
+                onFail: function (err) { }
+            });
+        }
+
+        function watchShakeClose() {
+            dd.device.accelerometer.clearShake({
+                onSuccess: function (result) {
+                    /* 调用成功
+                    */
+                    alert("||调用成功");
+                },
+                onFail: function (err) { }
+            });
+        }
+
+        function getPhoneInfo() {
+            dd.device.base.getPhoneInfo({
+                onSuccess: function (data) {
+                    /*
+                    {
+                        screenWidth: 1080, // 手机屏幕宽度
+                        screenHeight: 1920, // 手机屏幕高度
+                        brand:'Mi'， // 手机品牌
+                        model:'Note4', // 手机型号
+                        version:'7.0'. // 版本
+                        netInfo:'wifi' , // 网络类型 wifi／4g／3g
+                        operatorType :'xx' // 运营商信息
+                    }
+                    */
+                    alert(JSON.stringify(data));
+                },
+                onFail: function (err) { }
+            });
+        }
+
+        function getNetworkType() {
+            dd.device.connection.getNetworkType({
+                onSuccess: function (data) {
+                    /*
+                    {
+                        result: 'wifi' // result值: wifi 2g 3g 4g unknown none   none表示离线
+                    }
+                    */
+                    alert(JSON.stringify(data));
+                },
+                onFail: function (err) { }
+            });
+        }
+
+        function getWifiStatus() {
+            dd.device.base.getWifiStatus({
+                onSuccess: function (data) {
+                    /*
+                    {
+                        status: 1 // 1 ：enable；0 : disable
+                    }
+                    */
+                    alert(JSON.stringify(data));
+                },
+                onFail: function (err) { }
+            });
+        }
+
+        function setNavbarColor() {
+            var url = window.location.href;
+            if (url.indexOf('?') > -1) {
+                var dd_nav_bgcolor = escape(GetQueryString("dd_nav_bgcolor"));
+                if (dd_nav_bgcolor != null && dd_nav_bgcolor.toString().length > 0 && showmenu != 'null') {
+                    window.location.href = window.location.href
+                    return;
+                }
+                window.location.href = window.location.href + "&dd_nav_bgcolor=FF5E97F6";
+            } else {
+                window.location.href = window.location.href + "?dd_nav_bgcolor=FF5E97F6";
+            } 
+        }
+
+        function hideBar() {
+            var url = window.location.href;
+          
+            if (url.indexOf('?') > -1) {
+                var showmenu = escape(GetQueryString("showmenu")); 
+                if (showmenu != null && showmenu.toString().length > 0 && showmenu != 'null') {
+                    window.location.href = window.location.href
+                    return;
+                }
+                window.location.href = window.location.href + "&showmenu=false"; 
+            } else {
+                window.location.href = window.location.href + "?showmenu=false";
+            } 
+        }
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+
+        function close() {
+            dd.biz.navigation.close({
+                onSuccess: function (result) {
+                   
+                },
+                onFail: function (err) { }
+            })
+        }
+
+        function setTitle() {
+            dd.biz.navigation.setTitle({
+                title: '测试标题',//控制标题文本，空字符串表示显示默认文本
+                onSuccess: function (result) {
+                    
+                },
+                onFail: function (err) { }
+            });
+        }
+
+
+        function setRight() {
+            dd.biz.navigation.setRight({
+                show: true,//控制按钮显示， true 显示， false 隐藏， 默认true
+                control: true,//是否控制点击事件，true 控制，false 不控制， 默认false
+                text: '测试右侧',//控制显示文本，空字符串表示显示默认文本
+                onSuccess: function (result) {
+                    //如果control为true，则onSuccess将在发生按钮点击事件被回调
+                    /*
+                    {}
+                    */
+                },
+                onFail: function (err) { }
+            });
+        }
+
+        function replace() {
+            dd.biz.navigation.replace({
+                url: 'https://www.baidu.com',// 新的页面链接
+                onSuccess: function (result) {
+                    /*
+                    {}
+                    */
+                },
+                onFail: function (err) { }
+            });
+        }
+    </script>
+    <div id="showMsg"></div>
+    <input name="paramcontent" id="paramcontent" placeholder="请输入参数" type="text" />
+    <input name="scanQR" value="调用扫描二维码" onclick="scanQR()" type="button" /><br />
+    <a class="scanCard" href="javascript:">调用扫描卡片-</a><br />
+    <h3>弹窗口**********************</h3>
+    <input name="alertWindow" value="提示窗" onclick="alertWindow()" type="button" />
+    <input name="confirmWindow" value="确认窗" onclick="confirmWindow()" type="button" />
+    <input name="promptWindow" value="输入窗" onclick="promptWindow()" type="button" /> <br />
+    <input name="showPreloader" value="显示浮层" onclick="showPreloader()" type="button" />
+    <input name="toast" value="提示信息" onclick="toast()" type="button" />
+    <input name="option" value="选择" onclick="option()" type="button" />
+    <input name="modal" value="弹浮层" onclick="modal()" type="button" />
+    <input name="exmodal" value="增强弹浮层" onclick="exmodal()" type="button" />
+    <input name="MutliOption" value="多选" onclick="MutliOption()" type="button" /><br /><br />
+
+    <h3>设备相关**********************</h3>
+    <input name="notification" value="手机震动" onclick="notification()" type="button" />
+    <input name="watchShake​" value="启动摇一摇-" onclick="watchShake()" type="button" />
+    <input name="watchShakeClose​" value="关闭摇一摇" onclick="watchShakeClose()" type="button" />
+    <input name="getNetworkType​" value="获取网络类型" onclick="getNetworkType()" type="button" />
+    <input name="getWifiStatus​" value="获取WIFI" onclick="getWifiStatus()" type="button" />
+    <input name="getPhoneInfo​" value="获取手机基础信息" onclick="getPhoneInfo()" type="button" />
+
+    <h3>信息**********************</h3>
+    <a class="telephone" href="javascript:">拨打钉钉电话</a>
+    <a class="showCallMenu" href="javascript:">拨打外面电话</a>
+    <a class="createding" href="javascript:">发钉</a>
+
+    <a class="createGroup" href="javascript:">创建群组</a>
+    <a class="chooseMobileContacts" href="javascript:">选择手机联系人</a>
+    <a class="externalComplexPicker" href="javascript:">选择外部联系人</a><br />
+    <a class="externalComplexPicker" href="javascript:">调用回话信息</a>
+    <a class="pickConversation" href="javascript:">选择会话-</a><br />
+    <a class="chooseConversationByCorpId" href="javascript:">选择会话BY企业</a>
+    <a class="openSingleChat" href="javascript:">私聊</a><br />
+
+
+    <h3>选人组件******************</h3>
+    <a class="complexPicker" href="javascript:">选人和部门控件</a>
+    <a class="departmentsPicker" href="javascript:">选部门控件</a>
+    <h3>导航栏******************</h3>
+    <a class="setNavbarColor" href="javascript:" onclick="setNavbarColor()">设置颜色</a>
+    <a class="hideBar" href="javascript:" onclick="hideBar()">禁止分享</a>
+    <a class="setTitle" href="javascript:"  onclick="setTitle()">设置标题</a><br />
+    <a class="close" href="javascript:" onclick="close()">关闭页面</a>
+    <a class="setRight" href="javascript:" onclick="setRight()">设置右侧</a>
+    <a class="replace" href="javascript:" onclick="replace()">替换页面</a>
+    
+    <h3>其他**********************</h3>
+    <a class="maplocation" href="javascript:">展示周围地理信息-</a><br />
+    <a class="getlocation" href="javascript:">获取地理信息</a><br />
+    <a class="openiosamap" href="javascript:">打开高德地图</a><br />
+    <a class="uiltopen" href="javascript:">打开业务逻辑页</a><br />
+
+    <a class="openLink" href="javascript:">打开新页面</a><br />
+    <a class="openModal" href="javascript:">打开子模块-</a><br />
+    <input type="file" accept="image/*">
+    <a class="uploadImage" href="javascript:">上传图片</a><br />
+
+    <a class="uploadImageFromCamera" href="javascript:">拍照上传-</a><br />
+    @*<a class="downloadFile" href="javascript:">下载文件-</a><br />*@
+
+    <a class="encrypt" href="javascript:">加密</a>
+    <a class="decrypt" href="javascript:">解密</a><br />
+
+    <a class="alipaypay" href="javascript:">支付宝支付</a>
+
+
+</body>
+
+
+</html>

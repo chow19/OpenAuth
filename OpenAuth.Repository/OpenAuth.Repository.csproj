@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E8DF8DEA-E2CF-4BDB-8F4F-3F8205B0E03A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OpenAuth.Repository</RootNamespace>
+    <AssemblyName>OpenAuth.Repository</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.Extended">
+      <HintPath>..\packages\EntityFramework.Extended.6.1.0.168\lib\net45\EntityFramework.Extended.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\TreeEntity.cs" />
+    <Compile Include="Domain\Application.cs" />
+    <Compile Include="Domain\Category.cs" />
+    <Compile Include="Domain\CategoryType.cs" />
+    <Compile Include="Core\Entity.cs" />
+    <Compile Include="Domain\FlowInstance.cs" />
+    <Compile Include="Domain\FlowInstanceOperationHistory.cs" />
+    <Compile Include="Domain\FlowInstanceTransitionHistory.cs" />
+    <Compile Include="Domain\FlowScheme.cs" />
+    <Compile Include="Domain\Form.cs" />
+    <Compile Include="Domain\Kindee\ICMOBomInfo.cs" />
+    <Compile Include="Domain\Kindee\ICMOInfo.cs" />
+    <Compile Include="Domain\Kindee\ProductFeedOrder.cs" />
+    <Compile Include="Domain\Kindee\Scheme.cs" />
+    <Compile Include="Domain\Kindee\SEOrders.cs" />
+    <Compile Include="Domain\Kindee\User.cs" />
+    <Compile Include="Domain\Message.cs" />
+    <Compile Include="Domain\Module.cs" />
+    <Compile Include="Domain\ModuleElement.cs" />
+    <Compile Include="Domain\OldAJD\A_PBOM.cs" />
+    <Compile Include="Domain\OldAJD\A_PBOMEntry.cs" />
+    <Compile Include="Domain\OldAJD\PMC_MasterProductSchedule.cs" />
+    <Compile Include="Domain\OldAJD\PMC_MasterProductScheduleBOM.cs" />
+    <Compile Include="Domain\Org.cs" />
+    <Compile Include="Domain\Other_User.cs" />
+    <Compile Include="Domain\Relevance.cs" />
+    <Compile Include="Domain\Resource.cs" />
+    <Compile Include="Domain\Role.cs" />
+    <Compile Include="Domain\Stock.cs" />
+    <Compile Include="Domain\Task.cs" />
+    <Compile Include="Domain\User.cs" />
+    <Compile Include="Domain\UserExt.cs" />
+    <Compile Include="Interface\IRepository.cs" />
+    <Compile Include="Interface\IUnitWork.cs" />
+    <Compile Include="Interface\Kindee\IRepository.cs" />
+    <Compile Include="KindeeDB\KindeeBaseRepository.cs" />
+    <Compile Include="KindeeDB\KindeeDBContext.cs" />
+    <Compile Include="Mapping\ApplicationMap.cs" />
+    <Compile Include="Mapping\A_PBOMEntryMap.cs" />
+    <Compile Include="Mapping\A_PBOMMap.cs" />
+    <Compile Include="Mapping\CategoryTypeMap.cs" />
+    <Compile Include="Mapping\FlowInstanceMap.cs" />
+    <Compile Include="Mapping\FlowInstanceOperationHistoryMap.cs" />
+    <Compile Include="Mapping\FlowInstanceTransitionHistoryMap.cs" />
+    <Compile Include="Mapping\FlowSchemeMap.cs" />
+    <Compile Include="Mapping\FormMap.cs" />
+    <Compile Include="Mapping\MessageMap.cs" />
+    <Compile Include="Mapping\Other_UserMap.cs" />
+    <Compile Include="Mapping\PMC_MasterProductScheduleBOMMap.cs" />
+    <Compile Include="Mapping\PMC_MasterProductScheduleMap.cs" />
+    <Compile Include="Mapping\TaskMap.cs" />
+    <Compile Include="OpenAuth\Repository\Domain\AJD\A_PBOMEntry.cs" />
+    <Compile Include="UnitWork.cs" />
+    <Compile Include="BaseRepository.cs" />
+    <Compile Include="Mapping\CategoryMap.cs" />
+    <Compile Include="Mapping\ModuleElementMap.cs" />
+    <Compile Include="Mapping\ModuleMap.cs" />
+    <Compile Include="Mapping\OrgMap.cs" />
+    <Compile Include="Mapping\RelevanceMap.cs" />
+    <Compile Include="Mapping\ResourceMap.cs" />
+    <Compile Include="Mapping\RoleMap.cs" />
+    <Compile Include="Mapping\StockMap.cs" />
+    <Compile Include="Mapping\UserMap.cs" />
+    <Compile Include="OpenAuthDBContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{5feaec9a-4f1e-4ee7-b377-9db1b0870dac}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

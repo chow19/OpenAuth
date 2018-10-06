@@ -1,0 +1,195 @@
+﻿@section header
+{
+ 
+}
+<blockquote class="layui-elem-quote news_search toolList" id="menus"></blockquote>
+
+<div class="layui-row">
+ 
+    <div class="layui-col-xs12">
+        <table class="layui-table"
+               lay-data="{height: 'full-80', page:true, id:'mainList'}"
+               lay-filter="list" lay-size="sm">
+            <thead>
+                <tr>
+                    <th lay-data="{checkbox:true, fixed: true}"></th>
+                    <th lay-data="{field:'TaskName', width:120, sort: true, fixed: true}">任务名称</th>
+                    <th lay-data="{field:'TaskType', width:120}">任务类型</th>
+
+                    <th lay-data="{field:'DllName', width:135}">程序集名称</th>
+                    <th lay-data="{field:'ClassName', width:135}">类名</th>
+
+                    <th lay-data="{field:'StoreName', width:135}">存储过程</th>
+                    <th lay-data="{field:'StoreParams', width:180}">参数</th>
+                   
+                     <th lay-data="{field:'LastTaskTime', width:135}">上次执行时间</th>
+                     <th lay-data="{field:'NextTaskTime', width:135}">下次执行时间</th>
+
+                    <th lay-data="{field:'TiggerType', width:85}">触发类型</th>
+                    <th lay-data="{field:'DataType', width:85}">周期单位</th>
+                    <th lay-data="{field:'Interval', width:85}">间隔</th>
+                    <th lay-data="{field:'StartDateTime', width:135}">开始时间</th>
+                    <th lay-data="{field:'EndDateTime', width:135}">结束时间</th>
+
+                    <th lay-data="{field:'SuccessCount', width:85}">成功次数</th>
+                    <th lay-data="{field:'FailCount', width:85}">失败次数</th>
+                    <th lay-data="{field:'LastUseTime', width:85}">上次执行用时</th>
+                    <th lay-data="{field:'Remark', width:135}">备注</th>
+                    <th lay-data="{field:'IsUse', width:135}">是否可用</th>
+                    <th lay-data="{field:'Id', width:180}">ID</th>
+                    <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barList'}"></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<script type="text/html" id="barList">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+</script>
+
+<!--用户添加/编辑窗口-->
+<div id="divEdit" style="display: none">
+    <form class="layui-form layui-form-pane" action="" id="formEdit">
+
+        <input type="hidden" name="Id" v-model="Id" /> 
+        <div class="layui-form-item">
+            <label class="layui-form-label">任务名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="TaskName" v-model="TaskName" required lay-verify="required"
+                       placeholder="请输入任务名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item"> 
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="color-red">* </span>任务类型：</label>
+                <div class="layui-input-inline">
+                    <select id="TaskType" name="TaskType" required lay-verify="required">
+                        <option value="">请选择</option>
+                        <option value="1">类方法</option>
+                        <option value="2">存储过程</option> 
+                        <option value="3">链接</option> 
+                    </select>
+                </div>
+            </div> 
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">程序集名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="DllName" v-model="DllName"  
+                       placeholder="请输入程序集名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">类名</label>
+            <div class="layui-input-block">
+                <input type="text" name="ClassName" v-model="ClassName"
+                       placeholder="请输入类名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">存储过程/链接</label>
+            <div class="layui-input-block"> 
+                <input type="text" name="StoreName" v-model="StoreName"
+                       placeholder="请输入存储过程/链接" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">参数</label>
+            <div class="layui-input-block">
+                <input type="text" name="StoreParams" v-model="StoreParams"
+                       placeholder="(多个用';'隔开)" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">触发类型</label>
+            <div class="layui-input-block"> 
+                <select id="TiggerType" name="TiggerType" required lay-verify="required">
+                    <option value="">请选择</option>
+                    <option value="1">周期触发</option>
+                    <option value="2">指定触发</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">周期单位</label>
+            <div class="layui-input-block">
+                <select id="DataType" name="DataType" required lay-verify="required">
+                    <option value="">请选择</option> 
+                    <option value="1">年</option>
+                    <option value="2">月</option>
+                    <option value="3">日</option>
+                    <option value="4">时</option>
+                    <option value="5">分</option>
+                    <option value="6">周</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">间隔</label>
+            <div class="layui-input-block">
+                <input type="text" name="Interval" v-model="Interval" required lay-verify="required|number"
+                       placeholder="请输入间隔" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">开始时间</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" id="StartDateTime" name="StartDateTime" placeholder="yyyy-MM-dd HH:mm:ss"> 
+  
+                @*<div class="layui-inline">
+                    <label class="layui-form-label">日期时间选择器</label>
+                    <div class="layui-input-inline"> 
+                        <input type="text" class="layui-input" id="datetime" placeholder="yyyy-MM-dd HH:mm:ss"> 
+                    </div>
+                </div>*@
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">结束时间</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" id="EndDateTime" name="EndDateTime" placeholder="yyyy-MM-dd HH:mm:ss">
+                @*<div class="layui-inline">
+                    <label class="layui-form-label">日期时间选择器</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="datetime" placeholder="yyyy-MM-dd HH:mm:ss">
+                    </div>
+                </div>*@
+            </div>
+        </div>
+       
+        <div class="layui-form-item" pane>
+            <label class="layui-form-label">是否可用</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="IsUse" v-model="IsUse" lay-skin="switch" value="1">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">描述</label>
+            <div class="layui-input-block">
+                <input type="text" name="Remark" v-model="Remark"
+                       placeholder="请输入描述" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        @*<div class="layui-form-item">
+            <label class="layui-form-label">结束时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="EndDateTime" v-model="EndDateTime"
+                       placeholder="请输入结束时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>*@
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formSubmit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="~/userJs/Job.js"></script>

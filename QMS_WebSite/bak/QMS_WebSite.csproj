@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{28204053-F52F-4264-8B68-965D46D0C35D}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>QMS_WebSite</RootNamespace>
+    <AssemblyName>QMS_WebSite</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.0.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="AspNet.ScriptManager.bootstrap">
+      <HintPath>..\packages\AspNet.ScriptManager.bootstrap.3.0.0\lib\net45\AspNet.ScriptManager.bootstrap.dll</HintPath>
+    </Reference>
+    <Reference Include="AspNet.ScriptManager.jQuery">
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.1.10.2\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ScriptManager.WebForms">
+      <HintPath>..\packages\Microsoft.AspNet.ScriptManager.WebForms.5.0.0\lib\net45\Microsoft.ScriptManager.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <Private>True</Private>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Web.Optimization.WebForms">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.WebForms.1.1.3\lib\net45\Microsoft.AspNet.Web.Optimization.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.FriendlyUrls">
+      <HintPath>..\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.2\lib\net45\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Providers">
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.2.0.0\lib\net40\System.Web.Providers.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CSS\demos.css" />
+    <Content Include="CSS\page.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="GetSpecimens.aspx" />
+    <Content Include="GetSQDetails.aspx" />
+    <Content Include="images\applogo180x180.gif" />
+    <Content Include="images\pic_article.png" />
+    <Content Include="RawMaterialIQC_Check.aspx" />
+    <Content Include="RM_IQC.aspx" />
+    <Content Include="Scripts\comm.js" />
+    <Content Include="Scripts\fastclick.js" />
+    <Content Include="Scripts\jquery-2.1.4.js" />
+    <Content Include="Scripts\jquery-weui-1-2-min.css" />
+    <Content Include="Scripts\jquery-weui.css" />
+    <Content Include="Scripts\jquery-weui.js" />
+    <Content Include="Scripts\jquery-weui.min.css" />
+    <Content Include="Scripts\jquery-weui.min.js" />
+    <Content Include="Scripts\jquery-weui\js\action.js" />
+    <Content Include="Scripts\jquery-weui\js\album.js" />
+    <Content Include="Scripts\jquery-weui\js\calendar.js" />
+    <Content Include="Scripts\jquery-weui\js\city-data.js" />
+    <Content Include="Scripts\jquery-weui\js\city-picker.js" />
+    <Content Include="Scripts\jquery-weui\js\datetime-picker.js" />
+    <Content Include="Scripts\jquery-weui\js\device.js" />
+    <Content Include="Scripts\jquery-weui\js\hammer.js" />
+    <Content Include="Scripts\jquery-weui\js\infinite.js" />
+    <Content Include="Scripts\jquery-weui\js\jquery-extend.js" />
+    <Content Include="Scripts\jquery-weui\js\modal.js" />
+    <Content Include="Scripts\jquery-weui\js\notification.js" />
+    <Content Include="Scripts\jquery-weui\js\photos.js" />
+    <Content Include="Scripts\jquery-weui\js\picker.js" />
+    <Content Include="Scripts\jquery-weui\js\popup.js" />
+    <Content Include="Scripts\jquery-weui\js\pull-to-refresh.js" />
+    <Content Include="Scripts\jquery-weui\js\search-bar.js" />
+    <Content Include="Scripts\jquery-weui\js\select.js" />
+    <Content Include="Scripts\jquery-weui\js\slider.js" />
+    <Content Include="Scripts\jquery-weui\js\swipeout.js" />
+    <Content Include="Scripts\jquery-weui\js\swiper-wrap.js" />
+    <Content Include="Scripts\jquery-weui\js\swiper.jquery.js" />
+    <Content Include="Scripts\jquery-weui\js\tab.js" />
+    <Content Include="Scripts\jquery-weui\js\template7.js" />
+    <Content Include="Scripts\jquery-weui\js\toast.js" />
+    <Content Include="Scripts\jquery-weui\js\toptip.js" />
+    <Content Include="Scripts\jquery-weui\lib\fastclick.js" />
+    <Content Include="Scripts\jquery-weui\lib\jquery-2.1.4.js" />
+    <Content Include="Scripts\jquery-weui\lib\weui.css" />
+    <Content Include="Scripts\jquery-weui\lib\weui.min.css" />
+    <Content Include="Scripts\jquery-weui\lib\zepto.js" />
+    <Content Include="Scripts\mui\mui.min.css" />
+    <Content Include="Scripts\mui\mui.min.js" />
+    <Content Include="Scripts\weui.css" />
+    <Content Include="Scripts\zepto.min.js" />
+    <Content Include="Scripts\jquery.lazyload.min.js" />
+    <Content Include="Scripts\jquery1-2-weui.js" />
+    <Content Include="Scripts\jquery_1.6.3.js" />
+    <Content Include="Scripts\mobilebridge.js" />
+    <Content Include="Scripts\template.js" />
+    <Content Include="SendQCReportList.aspx" />
+    <Content Include="SendReportCheck.aspx" />
+    <Content Include="test.aspx" />
+    <Content Include="test2.aspx" />
+    <Content Include="UploadFile.aspx" />
+    <Content Include="Web.config" />
+    <Content Include="Scripts\jquery-weui\js\city-data.js.bak" />
+    <Content Include="Scripts\jquery-weui\js\photo-browser.js.bak" />
+    <Content Include="Scripts\jquery-weui\less\actions.less" />
+    <Content Include="Scripts\jquery-weui\less\calendar.less" />
+    <Content Include="Scripts\jquery-weui\less\cell.less" />
+    <Content Include="Scripts\jquery-weui\less\count.less" />
+    <Content Include="Scripts\jquery-weui\less\grid.less" />
+    <Content Include="Scripts\jquery-weui\less\infinite.less" />
+    <Content Include="Scripts\jquery-weui\less\jquery-weui.less" />
+    <Content Include="Scripts\jquery-weui\less\mixin.less" />
+    <Content Include="Scripts\jquery-weui\less\modal.less" />
+    <Content Include="Scripts\jquery-weui\less\navbar.less" />
+    <Content Include="Scripts\jquery-weui\less\notification.less" />
+    <Content Include="Scripts\jquery-weui\less\panel.less" />
+    <Content Include="Scripts\jquery-weui\less\photo-browser.less" />
+    <Content Include="Scripts\jquery-weui\less\picker.less" />
+    <Content Include="Scripts\jquery-weui\less\popup.less" />
+    <Content Include="Scripts\jquery-weui\less\pull-to-refresh.less" />
+    <Content Include="Scripts\jquery-weui\less\rem.less" />
+    <Content Include="Scripts\jquery-weui\less\reset.less" />
+    <Content Include="Scripts\jquery-weui\less\select.less" />
+    <Content Include="Scripts\jquery-weui\less\swiper.less" />
+    <Content Include="Scripts\jquery-weui\less\tab.less" />
+    <Content Include="Scripts\jquery-weui\less\text.less" />
+    <Content Include="Scripts\jquery-weui\less\toast.less" />
+    <Content Include="Scripts\jquery-weui\less\toolbar.less" />
+    <Content Include="Scripts\jquery-weui\less\toptip.less" />
+    <Content Include="Scripts\jquery-weui\less\variables.less" />
+    <Content Include="Scripts\jquery-weui\less\zindex.less" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Method\DBClass.cs" />
+    <Compile Include="Method\funResult.cs" />
+    <Compile Include="Method\IQCScanSubmit.cs" />
+    <Compile Include="RawMaterialIQC_Check.aspx.cs">
+      <DependentUpon>RawMaterialIQC_Check.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RawMaterialIQC_Check.aspx.designer.cs">
+      <DependentUpon>RawMaterialIQC_Check.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RM_IQC.aspx.cs">
+      <DependentUpon>RM_IQC.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RM_IQC.aspx.designer.cs">
+      <DependentUpon>RM_IQC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Method\SendQCReport.cs" />
+    <Compile Include="SendQCReportList.aspx.cs">
+      <DependentUpon>SendQCReportList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SendQCReportList.aspx.designer.cs">
+      <DependentUpon>SendQCReportList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SendReportCheck.aspx.cs">
+      <DependentUpon>SendReportCheck.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SendReportCheck.aspx.designer.cs">
+      <DependentUpon>SendReportCheck.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GetSpecimens.aspx.cs">
+      <DependentUpon>GetSpecimens.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GetSpecimens.aspx.designer.cs">
+      <DependentUpon>GetSpecimens.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GetSQDetails.aspx.cs">
+      <DependentUpon>GetSQDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GetSQDetails.aspx.designer.cs">
+      <DependentUpon>GetSQDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="test.aspx.cs">
+      <DependentUpon>test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test.aspx.designer.cs">
+      <DependentUpon>test.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="test2.aspx.cs">
+      <DependentUpon>test2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test2.aspx.designer.cs">
+      <DependentUpon>test2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UploadFile.aspx.cs">
+      <DependentUpon>UploadFile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UploadFile.aspx.designer.cs">
+      <DependentUpon>UploadFile.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Code\" />
+    <Folder Include="upload\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DuoNe.Infrastructure\DuoNe.Infrastructure.csproj">
+      <Project>{4ec35288-9c9e-4b0c-8854-592b6f180e0e}</Project>
+      <Name>DuoNe.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>60089</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:60089/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

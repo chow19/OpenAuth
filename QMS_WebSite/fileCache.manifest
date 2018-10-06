@@ -1,0 +1,16 @@
+﻿CACHE MANIFEST #声明缓存文件
+scripts/jquery-weui/lib/weui.min.css
+Scripts/jquery-weui-1-2-min.css
+CSS/demos.css
+scripts/jquery-weui/lib/jquery-2.1.4.js
+scripts/jquery-weui/lib/fastclick.js
+scripts/template.js
+scripts/mobilebridge.js
+Scripts/jquery1-2-weui.js
+css/page.css
+
+NETWORK: #不需要缓存的文件，一般设置【*】即可
+*
+
+FALLBACK: #当页面无法正常访问的时候所显示的页面，如404页面
+/images/loading.gif

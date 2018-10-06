@@ -1,0 +1,45 @@
+﻿@section header
+{
+  
+}
+<blockquote class="layui-elem-quote news_search toolList" id="menus"></blockquote> 
+
+<div class="layui-row"> 
+    <div class="layui-col-xs12">
+        <table class="layui-table"
+               lay-data="{height: 'full-80', page:true, id:'mainList'}"
+               lay-filter="list" lay-size="sm">
+            <thead>
+                <tr>
+                    <th lay-data="{checkbox:true, fixed: true}"></th>
+                    <th lay-data="{field:'MsgTitle', width:150, sort: true, fixed: true}">标题</th>
+                    <th lay-data="{field:'MsgContent', width:150}">内容</th>
+                    <th lay-data="{field:'FromName', width:135}">发送人</th>
+                    <th lay-data="{field:'CreateTime', width:180}">创建时间</th>
+                    <th lay-data="{field:'AttachPath', width:180,templet: '#attachPath'}">附件</th>
+                    <th lay-data="{field:'Id', width:0}">ID</th>
+                    <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barList'}"></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<!--列表右边的按钮-->
+<script type="text/html" id="barList">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="ToRecevice">标记已读</a>
+</script>
+
+<!--用户添加/编辑窗口-->
+<div id="divEdit" style="display: none">
+     
+</div>
+
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/userJs/Areas/Message/Message.js"></script> 
+<script type="text/html" id="attachPath">
+    {{#  if(d.attachPath !=''){ }}
+    <a href="{{d.attachPath}}" class="layui-table-link">附件</a> 
+    {{#  } }}
+
+</script>

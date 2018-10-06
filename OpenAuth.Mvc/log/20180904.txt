@@ -1,0 +1,4 @@
+2018-09-04 10:23:13,428 [1] INFO  log4net [(null)] - 启动Web
+2018-09-04 14:32:01,525 [1] INFO  log4net [(null)] - 启动Web
+2018-09-04 15:20:39,833 [1] INFO  log4net [(null)] - 启动Web
+2018-09-04 16:41:12,254 [1] INFO  log4net [(null)] - 启动Web

@@ -1,0 +1,10 @@
+﻿正在安装程序集“D:\kuangjia\OpenAuth.Net\JobSchedule.Service\Installer\JobSchedule.Service.exe”。
+受影响的参数是:
+   logtoconsole = 
+   logfile = D:\kuangjia\OpenAuth.Net\JobSchedule.Service\Installer\JobSchedule.Service.InstallLog
+   assemblypath = D:\kuangjia\OpenAuth.Net\JobSchedule.Service\Installer\JobSchedule.Service.exe
+正在回滚程序集“D:\kuangjia\OpenAuth.Net\JobSchedule.Service\Installer\JobSchedule.Service.exe”。
+受影响的参数是:
+   logtoconsole = 
+   logfile = D:\kuangjia\OpenAuth.Net\JobSchedule.Service\Installer\JobSchedule.Service.InstallLog
+   assemblypath = D:\kuangjia\OpenAuth.Net\JobSchedule.Service\Installer\JobSchedule.Service.exe

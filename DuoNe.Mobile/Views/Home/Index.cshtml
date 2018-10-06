@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+ 
+<Grid col={3} className="t-BCf" square={true} touchable={true}>
+    <div className="demo" onClick={t.add.bind(t)}>
+        <Icon name="user" fill={'#42A5F5'} />
+        <div className="menu-title">用户</div>
+    </div>
+    <div className="demo" onClick={t.add.bind(t)}>
+        <Icon name="time" fill={'#FF8A65'} />
+        <div className="menu-title">时钟</div>
+    </div>
+    <div className="demo" onClick={t.add.bind(t)}>
+        <Icon name="star" fill={'#EA80FC'} />
+        <div className="menu-title">星星</div>
+    </div>
+    <div className="demo" onClick={t.add.bind(t)}>
+        <Icon name="map" fill={'#EF9A9A'} />
+        <div className="menu-title">地图</div>
+    </div>
+    <div className="demo" onClick={t.add.bind(t)}>
+        <Icon name="pen" fill={'#9FA8DA'} />
+        <div className="menu-title">编辑</div>
+    </div>
+    <div className="demo" onClick={t.add.bind(t)}>
+        <Icon name="info-circle" fill={'#80DEEA'} />
+        <div className="menu-title">信息</div>
+    </div>
+    <div className="demo" onClick={t.add.bind(t)}>
+        <Icon name="plus-circle" fill={'#DCE775'} />
+        <div className="menu-title">添加</div>
+    </div>
+    <div className="demo" onClick={t.add.bind(t)}>
+        <Icon name="search" fill={'#A1887F'} />
+        <div className="menu-title">搜索</div>
+    </div>
+    <div className="demo" onClick={t.add.bind(t)}>
+        <Icon name="plus" fill={'#BDBDBD'} />
+        <div className="menu-title" style={{color: '#bbb'}}>添加</div>
+    </div>
+</Grid>
