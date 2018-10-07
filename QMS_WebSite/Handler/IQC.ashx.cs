@@ -925,6 +925,7 @@ namespace QMS_WebSite.Handler
                         Token["UV"].Parent.AddAfterSelf(new JProperty("Qty", Convert.ToString(dr["Qty"])));
                         Token["UV"].Parent.AddAfterSelf(new JProperty("IsCheck", Convert.ToString(dr["IsCheck"])));
 
+
                         sb.Append(CommHelper.JsonTOStr(Token));
 
                     }

@@ -44,6 +44,7 @@
         var img_GQLXarr = [];
         var img_WBarr = [];
         var img_STarr = [];
+        var img_PCarr = [];
 
         $(function () {
              
@@ -57,9 +58,12 @@
               
             });
 
-            //$("#SaveTemp").click(function () {
-            //    saveTempData();
-            //});
+            $("#SaveTemp").click(function () {
+                saveTempData();
+            });
+            $("#GHXG_GQLX_TJ").click(function () {
+                addGQLXData();
+            });
 
             $("#AcceptQty").on("keyup", function () {
                 var AcceptQty = $("#AcceptQty").val();
@@ -91,6 +95,7 @@
             uploadImgInit("uploaderInputimg_GQLX", "uploaderFilesimg_GQLX");
             uploadImgInit("uploaderInputimg_WB", "uploaderFilesimg_WB");
             uploadImgInit("uploaderInputimg_ST", "uploaderFilesimg_ST");
+            uploadImgInit("uploaderInputimg_PC", "uploaderFilesimg_PC");
 
             var $gallery = $("#gallery");
             var $galleryImg = $("#galleryImg");
@@ -112,6 +117,8 @@
             var $uploaderFiles_GQLX = $("#uploaderFilesimg_GQLX");
             var $uploaderFiles_WB = $("#uploaderFilesimg_WB");
             var $uploaderFiles_ST = $("#uploaderFilesimg_ST");
+
+            var $uploaderFiles_PC = $("uploaderFilesimg_PC");
 
             var index; //第几张图片  
             $uploaderFiles.on("click", "li", function () {
@@ -225,6 +232,13 @@
                 $gallery.fadeIn(100);
                 $("#hidgalley").val("ST");
             });
+            var indexpc;
+            $uploaderFiles_PC.on("click", "li", function()  {
+                indexpc = $(this).index();
+                $galleryImg.attr("style", this.getAttribute("style"));
+                $gallery.fadeIn(100);
+                $("#hidgalley").val("PC");
+            });
 
             $gallery.on("click", function () {
                 $gallery.fadeOut(100);
@@ -297,6 +311,9 @@
                         $uploaderFiles_ST.find("li").eq(indexst).remove();
                         img_STarr.splice(indexst, 1);
                         break;
+                    case "PC":
+                        $uploaderFiles_PC.find("li").eq(indexst).remove();
+                        img_PCarr.splice(indexst, 1);
 
                 }
                 //alert(img_UVarr.toString());
@@ -462,6 +479,9 @@
                 case "ST":
                     img_STarr.push(msg);
                     break;
+                case "PC":
+                    img_PCarr.push(msg);
+                    break;
             }
         }
 
@@ -506,6 +526,7 @@
             $form["GHXG_GQLX_Images"] = img_GQLXarr.join(";");
             $form["GHXG_WB_Images"] = img_WBarr.join(";");
             $form["ST_ST_Images"] = img_STarr.join(";");
+            $form["PC_PC_Images"] = img_PCarr.join(";");
 
             var CheckResult = $form["CheckResult"];
             var AcceptQty = $("#AcceptQty").val();
@@ -576,6 +597,7 @@
             $form["GHXG_GQLX_Images"] = img_GQLXarr.join(";");
             $form["GHXG_WB_Images"] = img_WBarr.join(";");
             $form["ST_ST_Images"] = img_STarr.join(";");
+            $form["PC_PC_Images"] = img_STarr.join(";");
 
             var CheckResult = $form["CheckResult"];
             var AcceptQty = $("#AcceptQty").val();
@@ -653,32 +675,32 @@
                 return false;
             }
 
-            var HD_ABJH = $form["HD_ABJH"];
-            if (HD_ABJH == "") {
-                $.toptip('AB胶厚不能为空', 'error');
-                return false;
-            }
+            //var HD_ABJH = $form["HD_ABJH"];
+            //if (HD_ABJH == "") {
+            //    $.toptip('AB胶厚不能为空', 'error');
+            //    return false;
+            //}
 
-            var YD_YD = $form["YD_YD"];
-            if (YD_YD == "") {
-                $.toptip('硬度不能为空', 'error');
-                return false;
-            }
+            //var YD_YD = $form["YD_YD"];
+            //if (YD_YD == "") {
+            //    $.toptip('硬度不能为空', 'error');
+            //    return false;
+            //}
             var SDJ_CS = $form["SDJ_CS"];
             if (SDJ_CS == "") {
                 $.toptip('水滴角初始不能为空', 'error');
                 return false;
             }
-            var SDJ_NM = $form["SDJ_NM"];
-            if (SDJ_NM == "") {
-                $.toptip('水滴角耐磨不能为空', 'error');
-                return false;
-            }
-            var SDJ_MCH = $form["SDJ_MCH"];
-            if (SDJ_NM == "") {
-                $.toptip('水滴角摩擦后不能为空', 'error');
-                return false;
-            }
+            //var SDJ_NM = $form["SDJ_NM"];
+            //if (SDJ_NM == "") {
+            //    $.toptip('水滴角耐磨不能为空', 'error');
+            //    return false;
+            //}
+            //var SDJ_MCH = $form["SDJ_MCH"];
+            //if (SDJ_NM == "") {
+            //    $.toptip('水滴角摩擦后不能为空', 'error');
+            //    return false;
+            //}
 
             // var img_ZMarr = [];
             if (img_UVarr.length <= 0) {
@@ -702,42 +724,42 @@
                 $.toptip('玻璃厚需上传图片', 'error');
                 return false;
             };
-            if (img_ABJHarr.length <= 0) {
-                $.toptip('AB胶需上传图片', 'error');
-                return false;
-            };
-            if (img_YDarr.length <= 0) {
-                $.toptip('硬度需上传图片', 'error');
-                return false;
-            };
+            //if (img_ABJHarr.length <= 0) {
+            //    $.toptip('AB胶需上传图片', 'error');
+            //    return false;
+            //};
+            //if (img_YDarr.length <= 0) {
+            //    $.toptip('硬度需上传图片', 'error');
+            //    return false;
+            //};
             if (img_CSarr.length <= 0) {
                 $.toptip('初始需上传图片', 'error');
                 return false;
             }
-            if (img_NMarr.length <= 0) {
-                $.toptip('耐磨需上传图片', 'error');
-                return false;
-            }
+            //if (img_NMarr.length <= 0) {
+            //    $.toptip('耐磨需上传图片', 'error');
+            //    return false;
+            //}
 
-            if (img_MCHarr.length <= 0) {
-                $.toptip('摩擦后需上传图片', 'error');
-                return false;
-            }
+            //if (img_MCHarr.length <= 0) {
+            //    $.toptip('摩擦后需上传图片', 'error');
+            //    return false;
+            //}
 
-            if (img_ZMarr.length <= 0) {
-                $.toptip('正面-质检需上传图片', 'error');
-                return false;
-            }
+            //if (img_ZMarr.length <= 0) {
+            //    $.toptip('正面-质检需上传图片', 'error');
+            //    return false;
+            //}
 
-            if (img_BMarr.length <= 0) {
-                $.toptip('背面-质检需上传图片', 'error');
-                return false;
-            }
+            //if (img_BMarr.length <= 0) {
+            //    $.toptip('背面-质检需上传图片', 'error');
+            //    return false;
+            //}
 
-            if (img_GQLXarr.length <= 0) {
-                $.toptip('钢球落下需上传图片', 'error');
-                return false;
-            }
+            //if (img_GQLXarr.length <= 0) {
+            //    $.toptip('钢球落下需上传图片', 'error');
+            //    return false;
+            //}
 
             if (img_WBarr.length <= 0) {
                 $.toptip('弯爆需上传图片', 'error');
@@ -957,6 +979,9 @@
                                 if (retdata.ST_ST_Images != "") {
                                     addImgli("ST", retdata.ST_ST_Images);
                                 }
+                                if (retdata.PC_PC_Images != "") {
+                                    addImgli("PC", retdata.PC_PC_Images);
+                                }
                             
                         } else {
 
@@ -1086,7 +1111,10 @@
                     break;
                 case "ST":
                     img_STarr.push(msg);
-                    break; 
+                    break;
+                case "PC":
+                    img_PCarr.push(msg);
+                    break;
             }
         }
         //添加图片名称到数组
@@ -1104,6 +1132,10 @@
                 }
             }
             $("#uploaderFilesimg_" + control).append(str);
+        }
+        //添加钢球落下数据
+        function addGQLXData() {
+            var str = 
         }
     </script>
 
@@ -1532,6 +1564,32 @@
                         <div class="weui-cell__hd">
                             <label for="" class="weui-label">钢球落下</label>
                         </div>
+                        <div  class="weui-cell__hd">
+                            <a id="GHXG_GQLX_TJ" href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_default">添加</a>
+                        </div>
+                        <div class="weui-cell__hd">
+                            <label for="" class="weui-label">数量</label>
+                            <input class="weui-input" type="number" pattern="[0-9]*" value="weui input error" placeholder="">
+                            <label for="" class="weui-label">高度</label>
+                            <input type="text" value="" list="fruits" />
+                            <datalist id="fruits">
+                                <option value="120">120</option>
+                                <option value="90">90</option>
+                                <option value="60">60</option>
+                                <option value="50">50</option>
+                            </datalist>
+                            <label for="" class="weui-label">高度</label>
+                            <input type="text" value="" list="fruits" />
+                            <datalist id="fruits">
+                                <option value="120">120</option>
+                                <option value="90">90</option>
+                                <option value="60">60</option>
+                                <option value="50">50</option>
+                            </datalist>
+                        </div>
+                        <%--<div class="weui-cell__hd">
+                            <label for="" class="weui-label">钢球落下</label>
+                        </div>
                         <div class="myOwn">
                             <select id="GHXG_GQLX" class="weui-select" name="GHXG_GQLX">
                                 <option value="0">请选择</option>
@@ -1553,7 +1611,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>--%>
 
                     </div>
                     <div class="weui-cell">
@@ -1650,8 +1708,35 @@
                     </div>
                 </div>
 
-                <div class="weui-cells__tips">平整度</div>
+                <div class="weui-cells__tips tltles">平整度</div>
                 <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell">
+                         <div class="weui-cell__hd">
+                                <label for="" class="weui-label">检验结果</label>
+                        </div>
+                        <div class="myOwn">
+                            <select id="PC_PC" class="weui-select" name="PC_PC">
+                                <option value="0">请选择</option>
+                                <option value="Ture">合格</option>
+                                <option value="False">不合格</option>
+                            </select>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <div class="weui-uploader imgspace">
+
+                                <div class="weui-uploader__bd">
+                                    图片上传 &nbsp;
+                                    <ul class="weui-uploader__files" id="uploaderFilesimg_PC">
+                                    </ul>
+                                    <div class="weui-uploader__input-box">
+                                        <input id="uploaderInputimg_PC" class="weui-uploader__input zjxfjs_file" type="file" accept="image/*" multiple="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%--<div class="weui-cells weui-cells_form">
                     <div class="weui-cell">
                         <div class="weui-cell__hd">
                             <label class="weui-label">左</label>
@@ -1687,12 +1772,14 @@
                             <input class="weui-input" type="number" name="P_Down"  id="P_Down" placeholder="下" onkeyup="this.value = this.value.replace(/[^\d\.]/g,'')" onafterpaste="this.value = this.value.replace(/[^\d\.]/g, '')">
                         </div>
                     </div>
-                </div>
+                </div>--%>
 
 
                 <div class="weui-cells__title">品质检验结果</div>
+                <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
                 <div class="weui-cell weui-cell_select weui-cell_select-after">
-                    <div class="weui-cell__hd">
+                 <div class="weui-cell__hd">
                         <label for="" class="weui-label">检验结果</label>
                     </div>
                     <div class="weui-cell__bd">
@@ -1740,7 +1827,7 @@
     </form>
 
     <div class="weui-btn-area" >
- <%--       <a class="weui-btn weui-btn_primary" href="javascript:" id="SaveTemp">保存</a>--%>
+        <a class="weui-btn weui-btn_primary" href="javascript:" id="SaveTemp">保存</a>
         <a class="weui-btn weui-btn_primary" href="javascript:" id="Submit">提交</a>
     </div>
     <a href="javascript:;" id='show-loading' class="weui-btn weui-btn_primary" style="display: none">提交中</a>
