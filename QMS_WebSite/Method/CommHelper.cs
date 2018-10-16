@@ -98,6 +98,7 @@ namespace QMS_WebSite.Method
         public static string XMLToJson(string XML) {
             
             XmlDocument doc = new XmlDocument();
+
             doc.LoadXml(XML);
             
             return Newtonsoft.Json.JsonConvert.SerializeXmlNode(doc);

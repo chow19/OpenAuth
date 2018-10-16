@@ -61,8 +61,16 @@
             $("#SaveTemp").click(function () {
                 saveTempData();
             });
+
             $("#GHXG_GQLX_TJ").click(function () {
-                addGQLXData();
+                var parma = {
+                    'GD': '',
+                    'QZ': '',
+                    'ZJ': '',
+                    'JCSL': '',
+                    'TGSL': ''
+                };
+                addGQLXData(parma);
             });
 
             $("#AcceptQty").on("keyup", function () {
@@ -427,6 +435,7 @@
             });
 
         }
+
         //添加图片名称到数组
         function addImgArr(msg) {
             var hidgalley = $("#hidgalley").val();
@@ -510,7 +519,7 @@
             }
             
             var $form = $("#form1").formSerialize();
-
+            console.log($form);
             $form["UV_Images"] = img_UVarr.join(";");
             $form["VL_Images"] = img_VLarr.join(";");
             $form["IR_Images"] = img_IRarr.join(";");
@@ -527,6 +536,24 @@
             $form["GHXG_WB_Images"] = img_WBarr.join(";");
             $form["ST_ST_Images"] = img_STarr.join(";");
             $form["PC_PC_Images"] = img_PCarr.join(";");
+            var forea = [];
+            $(".GQLXXXDIV").each(function () {
+                var $uploaderFilesimg_GQLX = []
+                $(this).find("li").each(function () {
+                    $uploaderFilesimg_GQLX.push($(this).attr("id"));
+                })
+                var eac = {
+                    'GD' : $(this).find(".GD").val(),
+                    'QZ' : $(this).find(".QZ").val(),
+                    'ZJ' : $(this).find(".ZJ").val(),
+                    'JCSL' : $(this).find(".JCSL").val(),
+                    'TGSL': $(this).find(".TGSL").val(),
+                    'uploaderFilesimg_GQLX': $uploaderFilesimg_GQLX
+                };
+                forea.push(eac);
+            })
+            $form.GHXG_list = forea;
+
 
             var CheckResult = $form["CheckResult"];
             var AcceptQty = $("#AcceptQty").val();
@@ -541,7 +568,8 @@
                 CheckType: 1,
                 Describe: Describe
             };
-
+            console.log("new");
+            console.log($form);
             $.ajax({
                 url: "../../Handler/IQC.ashx?FunType=SaveIQCCheckResultTempXmlData&SendQCReportId=" + SQCId,
                 type: "post",
@@ -598,7 +626,7 @@
             $form["GHXG_WB_Images"] = img_WBarr.join(";");
             $form["ST_ST_Images"] = img_STarr.join(";");
             $form["PC_PC_Images"] = img_STarr.join(";");
-
+            
             var CheckResult = $form["CheckResult"];
             var AcceptQty = $("#AcceptQty").val();
             var NGQty = $("#NGQty").val();
@@ -917,7 +945,15 @@
                                     
                                 //}
                                 var setMsg = retdata[o];
-                                if ($("#" + o).length > 0) {
+                                if (o == "GHXG_list") {
+                                    $.each(setMsg.Item, function (objkey, objvalue) {
+                                        addGQLXData(objvalue);
+                                        //$.each(objvalue, function (key, value) {
+                                        //    alert(value.GD);
+                                        //    addGQLXData(value);
+                                        //})
+                                    })
+                                } else if ($("#" + o).length > 0) {
                                     if ($("#" + o).prop("tagName").toLowerCase() == "input") {
                                         $("#" + o).val(setMsg)
                                     } else if ($("#" + o).prop("tagName").toLowerCase() == "select") {
@@ -996,7 +1032,233 @@
                 }
             });
         }
+
+        //添加钢球落下数据
+        function addGQLXData(parma) {
+            var li =" ";
+            if (parma.uploaderFilesimg_GQLX != null) {
+                $.each(parma.uploaderFilesimg_GQLX, function (key, value) {
+                    li=li+('<li id="' + value + '" class="weui-uploader__file" style="background-image:url(../../upload/' + value + ')"></li>');
+                })
+            }
+            var html = '\
+                <div class="weui-cell GQLXXXDIV">\
+                <div class="weui-cell_hd">\
+                    <label for="" class="weui-label">钢球落下详细</label>\
+                </div>\
+                <div class="weui-cell_bd">\
+                <div class="weui-cell">\
+                <label for="" class="weui-label">高度</label>\
+                <input class="weui-input GD" type="text" value="' + parma.GD + '" list="high">\
+                <select id="" class="weui-select input_select">\
+                <option value=">">></option>\
+                <option value="120">120</option>\
+                <option value="90">90</option>\
+                <option value="60"> 60</option>\
+                <option value="50"> 50</option>\
+                </select>\
+                </div>\
+                <div class="weui-cell">\
+                <label for="" class="weui-label">球重</label>\
+                <input class="weui-input QZ" type="text" value="' + parma.QZ + '" list="height">\
+                <select id="" class="weui-select input_select">\
+                <option value=">">></option>\
+                <option value="64">64</option>\
+                <option value="100">100</option>\
+                </select>\
+                </div>\
+                <div class="weui-cell">\
+                <label for="" class="weui-label">治具</label>\
+                <input class="weui-input ZJ" type="text" value="' + parma.ZJ + '" list="matrie">\
+                <select id="" class="weui-select input_select">\
+                <option value=">">></option>\
+                <option value="实心">实心</option>\
+                <option value="空心">空心</option>\
+                </select>\
+                </div>\
+                <div class="weui-cell">\
+                <label for="" class="weui-label weui-cell__hd">检测数量</label>\
+                <input class="weui-input weui-cell__bd JCSL" type="number" pattern="[0-9]*" value="' + parma.JCSL + '" placeholder="">\
+                </div>\
+                <div class="weui-cell">\
+                <label for="" class="weui-label weui-cell__hd ">通过数量</label>\
+                <input class="weui-input weui-cell__bd TGSL" type="number" pattern="[0-9]*" value="' + parma.TGSL + '" placeholder="">\
+                </div>\
+                <div class="weui-cell_bd">\
+                <div class="weui-uploader imgspace">\
+                <div class="weui-uploader__bd">                                    图片上传 &nbsp;                                    \
+                <ul class="weui-uploader__files uploaderFilesimg_GQLX">' +li+ '</ul>\
+                <div class="weui-uploader__input-box">\
+                <input class="weui-uploader__input zjxfjs_file uploaderInputimg_GQLX" type="file" accept="image/*" multiple="">\
+                </div>\
+                </div>\
+                </div>\
+                </div>\
+                </div>\
+                </div>\
+                '
+//            var html1 = "<div class=\"weui-cell GQLXXXDIV\">" +
+//"                        <div class=\"weui-cell_hd\">" +
+//"                            <label for=\"\" class=\"weui-label\">钢球落下详细</label>" +
+//"                        </div>" +
+//"                        <div class=\"weui-cell\">" +
+//"                            <label for=\"\" class=\"weui-label\">高度</label>" +
+//"                            <input class=\"GD\" type=\"text\" value=\"" + parma.GD + "\" list=\"high\" />" +
+//"                        </div>" +
+//"                        <div class=\"weui-cell\">" +
+//"                            <label for=\"\" class=\"weui-label\">球重</label>" +
+//"                            <input class=\"QZ\" type=\"text\" value=\"" + parma.QZ + "\" list=\"height\" />" +
+//"                        </div>" +
+//"                        <div class=\"weui-cell\">" +
+//"                            <label for=\"\" class=\"weui-label\">治具</label>" +
+//"                            <input class=\"ZJ\" type=\"text\" value=\"" + parma.ZJ + "\" list=\"matrie\" />" +
+//"                        </div>" +
+//"                        <div class=\"weui-cell\">" +
+//"                            <label for=\"\" class=\"weui-label weui-cell__hd\">检测数量</label>" +
+//"                            <input class=\"weui-input weui-cell__bd JCSL\" type=\"number\" pattern=\"[0-9]*\" value=\"" + parma.JCSL + "\" placeholder=\"\">" +
+//"                        </div>" +
+//"                         <div class=\"weui-cell\">" +
+//"                            <label for=\"\" class=\"weui-label weui-cell__hd \">通过数量</label>" +
+//"                            <input class=\"weui-input weui-cell__bd TGSL\" type=\"number\" pattern=\"[0-9]*\" value=\"" + parma.TGSL + "\" placeholder=\"\">" +
+//"                        </div>" +
+//"                        <div class=\"weui-cell\">" +
+//"                            <div class=\"weui-uploader imgspace\">" +
+//"                                <div class=\"weui-uploader__bd\">" +
+//"                                    图片上传 &nbsp;" +
+//"                                    <ul class=\"weui-uploader__files uploaderFilesimg_GQLX\" >" +
+//                                     li+
+//"                                    </ul>"+
+//"                                    <div class=\"weui-uploader__input-box\">" +
+//"                                        <input  class=\"weui-uploader__input zjxfjs_file uploaderInputimg_GQLX\" type=\"file\" accept=\"image/*\" multiple=\"\">" +
+//"                                    </div>" +
+//"                                </div>" +
+//"                            </div>" +
+//"                        </div>" +
+//"                        <div class=\"weui-cell\">" +
+//"                        <a href=\"javascript:;\" class=\"weui-btn weui-btn_disabled weui-btn_default GQLX_delete\">删除</a>" +
+//"                        </div>" +
+//"                        </div>";
+            $("#GHXG_list").append(html);
+            $(".GQLX_delete:last").click(function () {
+                $(this).parent().parent().remove();
+            });
+            $(".GQLXXXDIV:last").each(function () {
+                uploadGQLXImgInit($(this));
+                $(this).find(".input_select").on("change", function () {
+                    $(this).prev().val($(this).val());
+                    $(this).children("option:first").attr("selected", "selected");
+                })
+            });
+        };
          
+        /***
+            钢球落下详细上传图片初始化
+            *** $obj 传入GQLXXX对象
+            *** 
+        ***/
+        function uploadGQLXImgInit($obj) {
+
+            //alert("uploadGQLXImgInit" + $obj);
+            var $uploaderInput = $obj.find(".uploaderInputimg_GQLX");
+            var $uploaderFiles = $obj.find(".uploaderFilesimg_GQLX");
+
+            // 允许上传的图片类型  
+            var allowTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
+            // 1024KB，也就是 1MB  
+            var maxSize = 2048 * 2048;
+            // 图片最大宽度  
+            var maxWidth = 10000;
+            // 最大上传图片数量  
+            var maxCount = 6;
+
+            $uploaderInput.on('change', function (event) {
+
+                var files = event.target.files;
+                //console.log(files);return false;
+                // 如果没有选中文件，直接返回  
+                if (files.length === 0) {
+                    return;
+                }
+
+                for (var i = 0, len = files.length; i < len; i++) {
+                    var file = files[i];
+                    var reader = new FileReader();
+
+                    // 如果类型不在允许的类型范围内  
+                    if (allowTypes.indexOf(file.type) === -1) {
+
+                        $.alert("该类型不允许上传！", "警告！");
+                        continue;
+                    }
+
+                    if (file.size > maxSize) {
+                        //$.weui.alert({text: '图片太大，不允许上传'});
+                        $.alert("图片太大，不允许上传", "警告！");
+                        continue;
+                    }
+
+                    //if ($('.weui-uploader__file').length >= maxCount) {
+                    //    $.weui.alert({ text: '最多只能上传' + maxCount + '张图片' });
+                    //    return;
+                    //}
+
+                    reader.readAsDataURL(file);
+                    reader.onload = function (e) {
+                        //console.log(e);
+                        var img = new Image();
+                        img.src = e.target.result;
+                        img.onload = function () {
+                            // 不要超出最大宽度  
+                            var w = Math.min(maxWidth, img.width);
+                            // 高度按比例计算  
+                            var h = img.height * (w / img.width);
+                            var canvas = document.createElement('canvas');
+                            var ctx = canvas.getContext('2d');
+                            // 设置 canvas 的宽度和高度  
+                            canvas.width = w;
+                            canvas.height = h;
+                            ctx.drawImage(img, 0, 0, w, h);
+
+                            var base64 = canvas.toDataURL('image/jpeg', 0.8);
+                            //console.log(base64);
+
+                            var formData = new FormData();
+
+                            formData.append("images", base64);
+                            formData.append("filetype", file.type);
+                            //console.log(img.src);<a href="../../UploadFile.aspx">../../UploadFile.aspx</a>
+                            $.ajax({
+                                url: "../../UploadFile.aspx",
+                                type: 'POST',
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function (data) {
+                                    var jsonData = eval("(" + data + ")");
+                                    if (jsonData.result == 0) {
+                                        // 插入到预览区  
+                                        var $preview = $('<li id="' + jsonData.msg + '" class="weui-uploader__file" style="background-image:url(' + img.src + ')"><div class="weui-uploader__file-content">0%</div></li>');
+                                        $uploaderFiles.append($preview);
+                                        var num = $('.weui-uploader__file').length;
+                                        $.toast("上传成功");
+                                    } else {
+                                        $.toast("上传失败", "forbidden");
+                                    }
+
+
+                                },
+                                error: function (xhr, type) {
+                                    $.toast("Ajax error!", "forbidden");
+                                }
+                            });
+                        };
+                    };
+
+                }
+            });
+
+        }
+
         function setAQLParam(cyfs) {
 
             var v_cysf = "1";
@@ -1020,7 +1282,7 @@
 
             $("#lb_CYFS").text(v_cysf);
         }
-
+        
         //用户选择后的处理事件
         //用户选择后的处理事件
         function GetAQLinfo(cyfs, jcsp, jybz) {
@@ -1133,16 +1395,32 @@
             }
             $("#uploaderFilesimg_" + control).append(str);
         }
-        //添加钢球落下数据
-        function addGQLXData() {
-            var str = 
+
+        /***
+         ***添加GQLX图片名称到数组
+         ***/
+        function addGQLXImgli($obj, msg) {
+            var arr = msg.split(';');
+
+            var str = "";
+            for (var i = 0; i < arr.length; i++) {
+                var temp = arr[i].split('-');
+                if (temp.length > 1) {
+                    str += "<li class=\"weui-uploader__file\"  style=\"background-image:url(../../upload/" + arr[i] + ")\"><span style=\"color:red\">第" + temp[0] + "次加抽</span></li>";
+                } else {
+                    str += "<li class=\"weui-uploader__file\"  style=\"background-image:url(../../upload/" + arr[i] + ")\"></li>";
+                }
+            }
+            $obj.find(".uploaderFilesimg_GQLX").append(str);
         }
+
     </script>
 
 </head>
 <body>
 
     <div class="weui-gallery" id="gallery" style="display: none">
+        <button class="weui-icon-delete"
         <span class="weui-gallery__img" id="galleryImg" style="background-image: url(../../images/pic_article.png);"></span>
         <div class="weui-gallery__opr">
             <a href="javascript:" class="weui-gallery__del">
@@ -1558,35 +1836,25 @@
                 </div>
 
                 <div class="weui-cells__tips tltles">钢化效果</div>
-                <div class="weui-cells weui-cells_form">
+                <div class="weui-cells weui-cells_form" >
+                    <div id="GHXG_list">
+                       
+                    </div>
+                    <div  class="weui-cell">
+                        <a id="GHXG_GQLX_TJ" href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">添加</a>
+                    </div>
                     <div class="weui-cell">
-
-                        <div class="weui-cell__hd">
-                            <label for="" class="weui-label">钢球落下</label>
+                         <div class="weui-cell__hd">
+                                <label for="" class="weui-label">钢球落下检验结果</label>
                         </div>
-                        <div  class="weui-cell__hd">
-                            <a id="GHXG_GQLX_TJ" href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_default">添加</a>
+                        <div class="myOwn">
+                            <select id="GHXG_GQLX" class="weui-select" name="GHXG_GQLX">
+                                <option value="0">请选择</option>
+                                <option value="Ture">合格</option>
+                                <option value="False">不合格</option>
+                            </select>
                         </div>
-                        <div class="weui-cell__hd">
-                            <label for="" class="weui-label">数量</label>
-                            <input class="weui-input" type="number" pattern="[0-9]*" value="weui input error" placeholder="">
-                            <label for="" class="weui-label">高度</label>
-                            <input type="text" value="" list="fruits" />
-                            <datalist id="fruits">
-                                <option value="120">120</option>
-                                <option value="90">90</option>
-                                <option value="60">60</option>
-                                <option value="50">50</option>
-                            </datalist>
-                            <label for="" class="weui-label">高度</label>
-                            <input type="text" value="" list="fruits" />
-                            <datalist id="fruits">
-                                <option value="120">120</option>
-                                <option value="90">90</option>
-                                <option value="60">60</option>
-                                <option value="50">50</option>
-                            </datalist>
-                        </div>
+                     </div>
                         <%--<div class="weui-cell__hd">
                             <label for="" class="weui-label">钢球落下</label>
                         </div>
@@ -1612,8 +1880,6 @@
                                 </div>
                             </div>
                         </div>--%>
-
-                    </div>
                     <div class="weui-cell">
                         <div class="weui-cell__hd">
                             <label for="" class="weui-label">弯爆</label>
@@ -1779,19 +2045,19 @@
                 <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
                 <div class="weui-cell weui-cell_select weui-cell_select-after">
-                 <div class="weui-cell__hd">
-                        <label for="" class="weui-label">检验结果</label>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <select id="CheckResult" class="weui-select" name="CheckResult">
-                              <option value="0">请选择</option>
-                            <option value="1">全部接受</option>
-                            <option value="2">让步接受(特采)</option>
-                            <option value="3">挑选接受</option>
-                            <option value="4">免检</option>
-                            <option value="5">全部拒收</option>
-                        </select>
-
+                    <div class="weui-cell__hd">
+                            <label for="" class="weui-label">检验结果</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <select id="CheckResult" class="weui-select" name="CheckResult">
+                                  <option value="0">请选择</option>
+                                <option value="1">全部接受</option>
+                                <option value="2">让步接受(特采)</option>
+                                <option value="3">挑选接受</option>
+                                <option value="4">免检</option>
+                                <option value="5">全部拒收</option>
+                            </select>
+                       </div>
                     </div>
                 </div>
                 <div class="weui-cell">
@@ -1822,7 +2088,6 @@
                     </div>
                 </div> 
                 
-            </div>
         </div>
     </form>
 

@@ -493,12 +493,29 @@
 
         };
 
+        //抽样按钮点击事件
+        function FirstSpecimentBtnClick() {
+            $.prompt({
+                title: '自定义抽样数量',
+                text: '输入抽样数量',
+                input: '11',
+                empty: false, // 是否允许为空
+                onOK: function (input) {
+                    //点击确认
+                    FirstSpeciment(input);
+                },
+                onCancel: function () {
+                    //点击取消
+                }
+            });
+        }
+
         //第一次抽检
-        function FirstSpeciment() {
+        function FirstSpeciment(Spec_Qty) {
             //写入样本数据
             var SQCId = $("#SQCID").val();          //送检单
             var Scna_SN = $("#ScanSN").text();      //扫描标签
-            var Spec_Qty = $("#lb_CQty").text();  //抽检数量
+            $("#lb_CQty").text(Spec_Qty);  //抽检数量
             //var lotQty = $("#lb_ScanQty").text();   // 
             var RequireQty = $("#lb_CQty").text();
             if (Scna_SN.length == 0) {
@@ -902,7 +919,7 @@
 
     <%--   <input type="button" class="weui-btn weui-btn_primary" value="打印测试" onclick="TestPrint()"   />--%>
 
-    <input type="button" class="weui-btn weui-btn_primary" value="抽样" onclick="FirstSpeciment()" id="FirstSpecimentBtn" />
+    <input type="button" class="weui-btn weui-btn_primary" value="抽样" onclick="FirstSpecimentBtnClick()" id="FirstSpecimentBtn" />
     <input type="button" class="weui-btn weui-btn_primary" value="打印样本标签" onclick="PrintLabel()" id="PrintBtn" />
     <input type="button" class="weui-btn weui-btn_primary" value="重新打印" onclick="RePrintLabel()" id="RePrintBtn" />
     <%--</form>--%>

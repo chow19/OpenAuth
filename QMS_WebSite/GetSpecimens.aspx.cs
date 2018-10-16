@@ -26,7 +26,7 @@ namespace QMS_WebSite
                 }
                 else
                 {
-                    return "SQCR0000010V";
+                    return "SQCR000001GJ";
                 }
             }
         }
@@ -40,7 +40,7 @@ namespace QMS_WebSite
                 }
                 else
                 {
-                    return "1";
+                    return "0";
                 }
             }
         }
