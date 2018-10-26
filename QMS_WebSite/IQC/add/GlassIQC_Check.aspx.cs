@@ -19,7 +19,7 @@ namespace QMS_WebSite.IQC.add
                 }
                 else
                 {
-                    return "SQCR00000164";//SQCR000000TI
+                    return "SQCR000001JY";//SQCR000000TI//SQCR00000164
                 }
             }
         }

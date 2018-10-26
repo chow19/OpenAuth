@@ -36,6 +36,7 @@ namespace QMS_WebSite.Method
                 result = result.Concat(Encoding.Default.GetBytes(PrintData.YBBQ)).ToArray();
                 string ProductDescribe = CutByteString(PrintData.ProductDescribe, 34);
                 string Describe = CutByteString(PrintData.Describe, 38);
+                string productshortname = GetProductLastShortName(PrintData.ProductShortName).PadRight(14);
 
                 result = result.Concat(new byte[] { 0x1B, 0x61, 0x00 }).ToArray();  //左对齐
                 result = result.Concat(new byte[] { 0x1B, 0x21, 0x00 }).ToArray();  // 还原默认字体大小，取消下划线，取消粗体模式
@@ -454,13 +455,15 @@ namespace QMS_WebSite.Method
 
         private string GetProductLastShortName(string ProductShortName)
         {
-            char[] bbv = { 'a', 'b', 'c', 'd', 'e', 'f', 'A', 'B', 'C', 'D', 'E', 'F', };
+            //char[] bbv = { 'a', 'b', 'c', 'd', 'e', 'f', 'A', 'B', 'C', 'D', 'E', 'F', };
+            char[] bbv = { '.', };
 
             int inx = ProductShortName.LastIndexOfAny(bbv);
             if (inx < 0)
             {
-                return "";
+                return ProductShortName;
             }
+            string var = ProductShortName.Substring(inx, ProductShortName.Length - inx);
             return ProductShortName.Substring(inx, ProductShortName.Length - inx);
 
         }

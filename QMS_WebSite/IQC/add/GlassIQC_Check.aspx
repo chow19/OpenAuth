@@ -515,7 +515,7 @@
             $.showLoading();
             var SQCId = $("#SQCID").val();
             if (SQCId == "") {
-                $M.alert("数据异常");
+                $M.alert("saveTempData_SQCID数据异常");
             }
             
             var $form = $("#form1").formSerialize();
@@ -550,7 +550,9 @@
                     'TGSL': $(this).find(".TGSL").val(),
                     'uploaderFilesimg_GQLX': $uploaderFilesimg_GQLX
                 };
-                forea.push(eac);
+                if ($(this).find(".GD").val() != '' && $(this).find(".JCSL").val() != '') {
+                    forea.push(eac);
+                }
             })
             $form.GHXG_list = forea;
 
@@ -601,7 +603,7 @@
             $.showLoading();
             var SQCId = $("#SQCID").val();
             if (SQCId == "") {
-                $M.alert("数据异常");
+                $M.alert("dataSubmt_SQCID数据异常");
             }
             if (!CheckSubmit()) {
                 $.hideLoading();
@@ -626,7 +628,26 @@
             $form["GHXG_WB_Images"] = img_WBarr.join(";");
             $form["ST_ST_Images"] = img_STarr.join(";");
             $form["PC_PC_Images"] = img_STarr.join(";");
-            
+            var forea = [];
+            $(".GQLXXXDIV").each(function () {
+                var $uploaderFilesimg_GQLX = []
+                $(this).find("li").each(function () {
+                    $uploaderFilesimg_GQLX.push($(this).attr("id"));
+                })
+                var eac = {
+                    'GD': $(this).find(".GD").val(),
+                    'QZ': $(this).find(".QZ").val(),
+                    'ZJ': $(this).find(".ZJ").val(),
+                    'JCSL': $(this).find(".JCSL").val(),
+                    'TGSL': $(this).find(".TGSL").val(),
+                    'uploaderFilesimg_GQLX': $uploaderFilesimg_GQLX
+                };
+                if ($(this).find(".GD").val() != '' && $(this).find(".JCSL").val() != '') {
+                    forea.push(eac);
+                }
+            })
+            $form.GHXG_list = forea;
+
             var CheckResult = $form["CheckResult"];
             var AcceptQty = $("#AcceptQty").val();
             var NGQty = $("#NGQty").val();
@@ -863,7 +884,7 @@
         function pageLoad() {
             var SQCId = $("#SQCID").val();
             if (SQCId == "") {
-                $M.alert("数据异常");
+                $M.alert("SQCID数据异常");
             }
             //$.ajax({
             //    url: "../../../../Handler/IQC.ashx?FunType=PageLoad&SendQCReportId=" + SQCId,
@@ -946,7 +967,7 @@
                                 //}
                                 var setMsg = retdata[o];
                                 if (o == "GHXG_list") {
-                                    $.each(setMsg.Item, function (objkey, objvalue) {
+                                    $.each(setMsg, function (objkey, objvalue) {
                                         addGQLXData(objvalue);
                                         //$.each(objvalue, function (key, value) {
                                         //    alert(value.GD);
@@ -965,7 +986,7 @@
                             }
                             GetAQLinfo($("#lb_CYFS").text(), $("#lb_CYSP").text(), $("#lb_CYBZ").text());
                             if ($("#lb_CQty").text() == "") {
-                                $M.alert("数据异常");
+                                $M.alert("lb_CQty数据异常");
                             }
                             if (typeof (retdata.UV_Images) == "undefined") {
                                 return;

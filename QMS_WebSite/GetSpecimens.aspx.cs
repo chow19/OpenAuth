@@ -26,7 +26,7 @@ namespace QMS_WebSite
                 }
                 else
                 {
-                    return "SQCR000001GJ";
+                    return "SQCR000001JY";
                 }
             }
         }
@@ -40,7 +40,7 @@ namespace QMS_WebSite
                 }
                 else
                 {
-                    return "0";
+                    return "1";
                 }
             }
         }
@@ -55,7 +55,7 @@ namespace QMS_WebSite
                 }
                 else
                 {
-                    return "";
+                    return "来料送检抽样";
                 }
             }
         }
