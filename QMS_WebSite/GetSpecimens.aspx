@@ -626,7 +626,6 @@
                 success: function (data) {
                     var resJson = JSON.parse(data);
                     if (resJson.result = "0") {
-                        console.log(resJson.msg);
                         $M.openPrint(resJson.msg);
                     } else {
                         $.toast(resJson.msg, "forbidden");

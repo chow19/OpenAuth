@@ -58,33 +58,32 @@ namespace QMS_WebSite.Method
                 //return Convert.ToBase64String(result);
                 byte[] result = new byte[] { };
                 StringBuilder strb = new StringBuilder();
-                strb.Append("! 0 200 200 424 1\r\n");       // 纸张高度：5.3CM ： 5*80=400
-                strb.Append("PAGE-WIDTH 640\r\n");          // 纸张宽度：8CM： 7.6*80=608 
+                strb.Append("! 0 200 200 400 1\r\n");       // 纸张高度：5.3CM ： 5*80=400
+                strb.Append("PAGE-WIDTH 608\r\n");          // 纸张宽度：8CM： 7.6*80=608 
                 strb.Append("GAP-SENSE\r\n");
-                strb.Append("BOX 0 0 568 358 4\r\n");       //  矩形框指令 
+                strb.Append("BOX 8 8 600 392 1\r\n");       //  矩形框指令 
 
 
-                strb.Append("LINE 0 48  568 48 3 \r\n");      //划线1 横线
-                strb.Append("LINE 0 96  568 96 3 \r\n");      //划线2 
-                strb.Append("LINE 0 144 568 144 3 \r\n");     //划线3
-                strb.Append("LINE 0 192 568 192 3 \r\n");     //划线4
-                strb.Append("LINE 0 240 568 240 3 \r\n");     //划线5
-                strb.Append("LINE 0 300 568 300 3 \r\n");     //划线6
+                strb.Append("LINE 8 56  600 56 1 \r\n");      //划线1 横线
+                strb.Append("LINE 8 104  600 104 1 \r\n");      //划线2 
+                strb.Append("LINE 8 152 600 152 1 \r\n");     //划线3
+                strb.Append("LINE 8 200 600 200 1 \r\n");     //划线4
+                strb.Append("LINE 8 248 600 248 1 \r\n");     //划线5
+                strb.Append("LINE 8 360 600 360 1 \r\n");     //划线6
 
-                strb.Append("LINE 120 48 120 358 3 \r\n");    //  竖线 1
-                strb.Append("LINE 336 48 336 144 3 \r\n");    //  竖线 2 
-                strb.Append("LINE 408 48 408 144 3 \r\n");    //  竖线 3
+                strb.Append("LINE 120 56 120 360 1 \r\n");    //  竖线 1
+                strb.Append("LINE 296 200 296 360 1 \r\n");    //  竖线 2 
+                strb.Append("LINE 376 200 376 360 1 \r\n");    //  竖线 3
 
-                strb.Append("LINE 230 300 230 356 3 \r\n");   //  竖线 4 240->230
-                strb.Append("LINE 292 300 292 356 3 \r\n");   //  竖线 5 312->292
-                strb.Append("LINE 390 300 390 356 3 \r\n");   //  竖线 6 410->390
-                strb.Append("LINE 452 300 452 356 3 \r\n");   //  竖线 7 472->452
+                strb.Append("LINE 296 56 296 104 1 \r\n");   //  竖线 4 
+                strb.Append("LINE 376 56 376 104 1 \r\n");   //  竖线 5 
+
 
 
                 //strb.Append("CENTER\r\n ");
                 strb.Append("SETBOLD 1\r\n ");                      //打印粗体
                 strb.Append("SETMAG 1 1 \r\n");                     // 字符放大指令 
-                strb.Append("TEXT 12 2 150 15 生产流转卡(FT180808000001)\r\n ");   // 
+                strb.Append("TEXT 12 2 150 15 来料抽样标签\r\n ");   // 
                 strb.Append("SETMAG 0 0 \r\n");                     // 字符放大指令
                 strb.Append("SETBOLD 0\r\n ");                   //打印粗体
 
@@ -93,47 +92,35 @@ namespace QMS_WebSite.Method
 
                 strb.Append("SETMAG 1 1 \r\n");             // 字符放大指令 
 
-                strb.Append("TEXT 10 10 25 62 订单号\r\n ");  //   
-                strb.Append("TEXT 10 10 148 62 SE2018060405\r\n ");  //  
+                strb.Append("TEXT 10 10 16 64 采购订单\r\n ");  //   
+                strb.Append("TEXT 10 10 128 64" + PrintData.POName.PadRight(12) + "\r\n ");  //  
 
-                strb.Append("TEXT 10 10 342 62 批 次\r\n ");  //
-                strb.Append("TEXT 10 10 415 62 18081600AC\r\n ");  //  
-
-
-                strb.Append("TEXT 10 10 15 109 物料编码\r\n ");  // 
-
-                strb.Append("TEXT 10 10 166 109 B011034130\r\n ");  // 
+                strb.Append("TEXT 10 10 304 64 批  号\r\n ");  //
+                strb.Append("TEXT 10 10 384 64 " + PrintData.ProductionDateCode + "\r\n ");  //  
 
 
-                strb.Append("TEXT 10 10 342 109 工 序\r\n ");  // 
-                strb.Append("TEXT 10 10 418 109 MK-20-模切\r\n ");  // 
-
-                strb.Append("TEXT 10 10 15 157 物料名称\r\n ");  //   
-                strb.Append("TEXT 10 10 128 157 4036 Alpha NEX-5N/Alpha NEX-F3、Sony\r\n ");  //  
+                strb.Append("TEXT 10 10 16 112 物料代码\r\n ");  // 
+                strb.Append("TEXT 10 10 128 112 " + PrintData.ProductShortName + "\r\n ");  // 
 
 
-                strb.Append("TEXT 10 10 25 205 规  格\r\n ");  // 
+                strb.Append("TEXT 10 10 16 160 物料名称\r\n ");  //
+                strb.Append("TEXT 10 10 128 160 " + PrintData.ProductDescribe + "\r\n ");  //  
 
-                strb.Append("TEXT 10 10 128 205 透明保护膜 - Apple iPhone 5c/5s/5\r\n ");
+                strb.Append("TEXT 10 10 16 208 抽样方式\r\n ");  //
+                strb.Append("TEXT 10 10 128 208 " + PrintData.CYFS + "\r\n ");  //  
 
-
-                strb.Append("TEXT 10 10 25 258 条  码\r\n ");  //   X+5 ,Y+18
-
-
-                strb.Append("TEXT 10 10 25 316 数  量\r\n ");  //   
-                strb.Append("TEXT 10 10 128 316 1000 PCS \r\n ");  //   
-
-                strb.Append("TEXT 10 10 235 316 重量\r\n ");    // 243->245->235
-                strb.Append("TEXT 10 10 306 316 500 G \r\n ");  // 326->306
+                strb.Append("TEXT 10 10 304 208 数  量\r\n ");  //   
+                strb.Append("TEXT 10 10 384 208 " + PrintData.FSampleSize + "\r\n ");  //   
 
 
-                strb.Append("TEXT 10 10 397 316 姓名 \r\n ");  //415->417->397 
-                strb.Append("TEXT 10 10 460 316 李一男 \r\n ");  //480->460 
+                strb.Append("TEXT 10 10 16 248 样本条码\r\n ");  // 
 
+                strb.Append("TEXT 10 10 304 248 备  注\r\n ");  //   
+                strb.Append("TEXT 10 10 384 248 " + PrintData.SpecimentDescription + "\r\n ");  // 
 
                 strb.Append("SETMAG 0 0 \r\n");             // 字符放大指令
 
-                strb.Append("BARCODE 128 1 1 50 190 245 123456789ABC \r\n");             // 打印条码
+                strb.Append("BARCODE QR 128 248 288 592 " + PrintData.YBBQ + "\r\n ");             // 打印条码
 
 
 
