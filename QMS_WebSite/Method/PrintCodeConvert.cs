@@ -16,8 +16,8 @@ namespace QMS_WebSite.Method
             try
             {
 
-                //byte[] result = new byte[] { };
-                //result = new byte[] { 0x1B, 0x40 };       //打印机复位
+                byte[] result = new byte[] { };
+                result = new byte[] { 0x1B, 0x40 };       //打印机复位
                 //result = result.Concat(new byte[] { 0x1B, 0x33, 0x00 }).ToArray();   //设置行间距为0 
 
                 //result = result.Concat(new byte[] { 0x1B, 0x61, 0x01 }).ToArray();  //设置居中
@@ -44,83 +44,83 @@ namespace QMS_WebSite.Method
                 //result = result.Concat(Encoding.Default.GetBytes("┏━━━━┳━━━━━━┳━━┳━━━━━━━┓\n")).ToArray();
                 //result = result.Concat(Encoding.Default.GetBytes("┃采购单号┃" + PrintData.POName.PadRight(12) + "┃物料┃" + GetProductLastShortName(PrintData.ProductShortName).PadRight(14) + "┃\n")).ToArray();
                 //result = result.Concat(Encoding.Default.GetBytes("┣━━━━╋━━━━━━┻━━┻━━━━━━━┫\n")).ToArray();
-                //result = result.Concat(Encoding.Default.GetBytes("┃物料描述┃" + ProductDescribe + "┃\n")).ToArray();
+                //result = result.Concat(Encoding.Default.GetBytes("┃物料描述┃" + ProductDescribe + "┃\n")).ToArray(); 
                 //result = result.Concat(Encoding.Default.GetBytes("┣━━┳━┻━┳━━┳━━━┳━━━━┳━━━┫\n")).ToArray();
                 //result = result.Concat(Encoding.Default.GetBytes("┃AQL1┃" + PrintData.AQL1.PadRight(6) + "┃AQL2┃" + PrintData.AQL2.PadRight(6) + "┃抽样方式┃" + PrintData.CYFS.PadRight(4) + "┃\n")).ToArray();
                 //result = result.Concat(Encoding.Default.GetBytes("┣━━╋━━━┻━━┻━━━┻━━━━┻━━━┫\n")).ToArray();
                 //result = result.Concat(Encoding.Default.GetBytes("┃备注┃" + Describe + "┃\n")).ToArray();
                 //result = result.Concat(Encoding.Default.GetBytes("┗━━┻━━━━━━━━━━━━━━━━━━━┛\n")).ToArray();
 
-                //result = result.Concat(new byte[] { 0x1B, 0x61, 0x01 }).ToArray();  //设置居中
+                // result = result.Concat(new byte[] { 0x1B, 0x61, 0x01 }).ToArray();  //设置居中
                 ////result = result.Concat(new byte[] { 0x1D, 0x21, 0x01 }).ToArray();  //设置倍高
                 //result = result.Concat(Encoding.Default.GetBytes("打印日期：" + PrintData.SendDate.ToString("yyyy-MM-dd") + " \n\n\n\n\n\n\n")).ToArray();
-
-                //return Convert.ToBase64String(result);
-                byte[] result = new byte[] { };
                 StringBuilder strb = new StringBuilder();
-                strb.Append("! 0 200 200 400 1\r\n");       // 纸张高度：5.3CM ： 5*80=400
+                strb.Append("! 0 200 200 400 1\r\n");       // 纸张高度：5.3CM ： 5*80=400  每毫米8点
                 strb.Append("PAGE-WIDTH 608\r\n");          // 纸张宽度：8CM： 7.6*80=608 
                 strb.Append("GAP-SENSE\r\n");
-                strb.Append("BOX 8 8 600 392 1\r\n");       //  矩形框指令 
+                strb.Append("BOX 0 8 568 360 1\r\n");       //  矩形框指令 
 
 
-                strb.Append("LINE 8 56  600 56 1 \r\n");      //划线1 横线
-                strb.Append("LINE 8 104  600 104 1 \r\n");      //划线2 
-                strb.Append("LINE 8 152 600 152 1 \r\n");     //划线3
-                strb.Append("LINE 8 200 600 200 1 \r\n");     //划线4
-                strb.Append("LINE 8 248 600 248 1 \r\n");     //划线5
-                strb.Append("LINE 8 360 600 360 1 \r\n");     //划线6
+                strb.Append("LINE 0 56  568 56 1 \r\n");      //划线1 横线
+                strb.Append("LINE 0 104 568 104 1 \r\n");     //划线2 
+                strb.Append("LINE 0 152 568 152 1 \r\n");     //划线3
+                strb.Append("LINE 0 200 568 200 1 \r\n");     //划线4
+                strb.Append("LINE 0 248 568 248 1 \r\n");     //划线5
+                                                              //strb.Append("LINE 0 360 568 360 1 \r\n");     //划线6
 
-                strb.Append("LINE 120 56 120 360 1 \r\n");    //  竖线 1
-                strb.Append("LINE 296 200 296 360 1 \r\n");    //  竖线 2 
-                strb.Append("LINE 376 200 376 360 1 \r\n");    //  竖线 3
+                strb.Append("LINE 112 56 112 360 1 \r\n");    //  竖线 1 L1
+                strb.Append("LINE 288 200 288 248 1 \r\n");   //  竖线 2 L2
+                strb.Append("LINE 368 200 368 248 1 \r\n");   //  竖线 3 L3
+                strb.Append("LINE 448 248 448 360 1 \r\n");    //  竖线 4 L4
 
-                strb.Append("LINE 296 56 296 104 1 \r\n");   //  竖线 4 
-                strb.Append("LINE 376 56 376 104 1 \r\n");   //  竖线 5 
+                strb.Append("LINE 288 56 288 104 1 \r\n");    //  竖线 5 L5
+                strb.Append("LINE 368 56 368 104 1 \r\n");    //  竖线 6 L6
 
 
 
                 //strb.Append("CENTER\r\n ");
                 strb.Append("SETBOLD 1\r\n ");                      //打印粗体
                 strb.Append("SETMAG 1 1 \r\n");                     // 字符放大指令 
-                strb.Append("TEXT 12 2 150 15 来料抽样标签\r\n ");   // 
+                strb.Append("TEXT 12 6 118 17 来料抽样标签 "+PrintData.SendDate.ToString().PadLeft(16)+"\r\n ");  // 
                 strb.Append("SETMAG 0 0 \r\n");                     // 字符放大指令
-                strb.Append("SETBOLD 0\r\n ");                   //打印粗体
+                strb.Append("SETBOLD 0\r\n ");                      //打印粗体
 
                 //打印条码
-                strb.Append("LEFT\r\n ");                   //左对齐
+                strb.Append("LEFT\r\n ");                          //左对齐
 
                 strb.Append("SETMAG 1 1 \r\n");             // 字符放大指令 
 
-                strb.Append("TEXT 10 10 16 64 采购订单\r\n ");  //   
-                strb.Append("TEXT 10 10 128 64" + PrintData.POName.PadRight(12) + "\r\n ");  //  
+                strb.Append("TEXT 10 10 8 64 采购订单\r\n ");        //   1列
+                strb.Append("TEXT 10 10 120 64 "+ PrintData.POName.PadRight(12) +"\r\n ");  //   2列
 
-                strb.Append("TEXT 10 10 304 64 批  号\r\n ");  //
-                strb.Append("TEXT 10 10 384 64 " + PrintData.ProductionDateCode + "\r\n ");  //  
-
-
-                strb.Append("TEXT 10 10 16 112 物料代码\r\n ");  // 
-                strb.Append("TEXT 10 10 128 112 " + PrintData.ProductShortName + "\r\n ");  // 
+                strb.Append("TEXT 10 10 296 64 批  号\r\n ");        //3列
+                strb.Append("TEXT 10 10 376 64 "+ PrintData.ProductionDateCode +"\r\n ");  //  4列
 
 
-                strb.Append("TEXT 10 10 16 160 物料名称\r\n ");  //
-                strb.Append("TEXT 10 10 128 160 " + PrintData.ProductDescribe + "\r\n ");  //  
-
-                strb.Append("TEXT 10 10 16 208 抽样方式\r\n ");  //
-                strb.Append("TEXT 10 10 128 208 " + PrintData.CYFS + "\r\n ");  //  
-
-                strb.Append("TEXT 10 10 304 208 数  量\r\n ");  //   
-                strb.Append("TEXT 10 10 384 208 " + PrintData.FSampleSize + "\r\n ");  //   
+                strb.Append("TEXT 10 10 8 112 物料代码\r\n ");  // 1列
+                strb.Append("TEXT 10 10 120 112 "+ PrintData.ProductShortName +"\r\n ");  //2列 
 
 
-                strb.Append("TEXT 10 10 16 248 样本条码\r\n ");  // 
+                strb.Append("TEXT 10 10 8 160 物料名称\r\n ");  //1列
+                strb.Append("TEXT 10 10 120 160 "+ PrintData.ProductDescribe +"\r\n ");  // 2列 
 
-                strb.Append("TEXT 10 10 304 248 备  注\r\n ");  //   
-                strb.Append("TEXT 10 10 384 248 " + PrintData.SpecimentDescription + "\r\n ");  // 
+                strb.Append("TEXT 10 10 8 208 抽样方式\r\n ");  //1列
+                strb.Append("TEXT 10 10 120 208 "+ PrintData.CYFS +"\r\n ");  //2列  
+
+                strb.Append("TEXT 10 10 296 208 数  量\r\n ");    //3列   
+                strb.Append("TEXT 10 10 376 208 "+ PrintData.FSampleSize +"\r\n ");  //4列   
+
+
+                strb.Append("TEXT 10 10 8 280 样本条码\r\n ");  //1列 
+
+                //strb.Append("TEXT 10 10 296 280 备  注\r\n ");  //2列   
+                //strb.Append("TEXT 10 10 376 252 \r\n ");        // 
+                strb.Append("TEXT 10 10 184 322 "+ PrintData.YBBQ +"\r\n ");  //1列 
 
                 strb.Append("SETMAG 0 0 \r\n");             // 字符放大指令
 
-                strb.Append("BARCODE QR 128 248 288 592 " + PrintData.YBBQ + "\r\n ");             // 打印条码
+                strb.Append("BARCODE 128 1 1 50 124 272 "+ PrintData.YBBQ +" \r\n");             // 打印条码
+                strb.Append("BARCODE QR 456 252 M 2 U 5 LA,"+ PrintData.YBBQ + "\r\nENDQR\r\n ");             // 打印条码
 
 
 
