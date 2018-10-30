@@ -28,16 +28,13 @@
     <script src="../../Scripts/comm.js"></script>
   
     <script>
+        var img_XHTZarr = [];
         var img_UVarr = [];
-        // var img_ZMarr = [];
-        var img_VLarr = [];
-        var img_IRarr = [];
         var img_ZHarr = [];
         var img_BLHarr = [];
         var img_ABJHarr = [];
         var img_YDarr = [];
         var img_CSarr = [];
-        var img_NMarr = [];
         var img_MCHarr = [];
         var img_ZMarr = [];
         var img_BMarr = [];
@@ -87,16 +84,13 @@
         //图片组件初始化
         function ImgControllerinit() {
 
+            uploadImgInit("uploaderInputimg_XHTZ", "uploaderFilesimg_XHTZ");
             uploadImgInit("uploaderInputimg_UV", "uploaderFilesimg_UV");
-            // uploadImgInit("uploaderInputimg_ZM", "uploaderFilesimg_ZM");
-            uploadImgInit("uploaderInputimg_VL", "uploaderFilesimg_VL");
-            uploadImgInit("uploaderInputimg_IR", "uploaderFilesimg_IR");
             uploadImgInit("uploaderInputimg_ZH", "uploaderFilesimg_ZH");
             uploadImgInit("uploaderInputimg_BLH", "uploaderFilesimg_BLH");
             uploadImgInit("uploaderInputimg_ABJH", "uploaderFilesimg_ABJH");
             uploadImgInit("uploaderInputimg_YD", "uploaderFilesimg_YD");
             uploadImgInit("uploaderInputimg_CS", "uploaderFilesimg_CS");
-            uploadImgInit("uploaderInputimg_NM", "uploaderFilesimg_NM");
             uploadImgInit("uploaderInputimg_MCH", "uploaderFilesimg_MCH");
             uploadImgInit("uploaderInputimg_ZM", "uploaderFilesimg_ZM");
             uploadImgInit("uploaderInputimg_BM", "uploaderFilesimg_BM");
@@ -109,15 +103,12 @@
             var $galleryImg = $("#galleryImg");
 
             var $uploaderFiles = $("#uploaderFilesimg_UV");
-            //var $uploaderFiles_ZM = $("#uploaderFilesimg_ZM");
-            var $uploaderFiles_VL = $("#uploaderFilesimg_VL");
-            var $uploaderFiles_IR = $("#uploaderFilesimg_IR");
+            var $uploaderFiles_XHTZ = $("#uploaderFilesimg_XHTZ");
             var $uploaderFiles_ZH = $("#uploaderFilesimg_ZH");
             var $uploaderFiles_BLH = $("#uploaderFilesimg_BLH");
             var $uploaderFiles_ABJH = $("#uploaderFilesimg_ABJH");
             var $uploaderFiles_YD = $("#uploaderFilesimg_YD");
             var $uploaderFiles_CS = $("#uploaderFilesimg_CS");
-            var $uploaderFiles_NM = $("#uploaderFilesimg_NM");
             var $uploaderFiles_MCH = $("#uploaderFilesimg_MCH");
             var $uploaderFiles_ZM = $("#uploaderFilesimg_ZM");
             var $uploaderFiles_BM = $("#uploaderFilesimg_BM");
@@ -135,26 +126,12 @@
                 $gallery.fadeIn(100);
                 $("#hidgalley").val("UV");
             });
-            //var indexzm;
-            //$uploaderFiles_ZM.on("click", "li", function () {
-            //    indexzm = $(this).index();
-            //    $galleryImg.attr("style", this.getAttribute("style"));
-            //    $gallery.fadeIn(100);
-            //    $("#hidgalley").val("ZW");
-            //});
-            var indexvl;
-            $uploaderFiles_VL.on("click", "li", function () {
-                indexvl = $(this).index();
+            var indexxhtz;
+            $uploaderFiles_XHTZ.on("click", "li", function () {
+                indexzh = $(this).index();
                 $galleryImg.attr("style", this.getAttribute("style"));
                 $gallery.fadeIn(100);
-                $("#hidgalley").val("VL");
-            });
-            var indexir;
-            $uploaderFiles_IR.on("click", "li", function () {
-                indexir = $(this).index();
-                $galleryImg.attr("style", this.getAttribute("style"));
-                $gallery.fadeIn(100);
-                $("#hidgalley").val("IR");
+                $("#hidgalley").val("XHTZ");
             });
             var indexzh;
             $uploaderFiles_ZH.on("click", "li", function () {
@@ -190,13 +167,6 @@
                 $galleryImg.attr("style", this.getAttribute("style"));
                 $gallery.fadeIn(100);
                 $("#hidgalley").val("CS");
-            });
-            var indexnm;
-            $uploaderFiles_NM.on("click", "li", function () {
-                indexnm = $(this).index();
-                $galleryImg.attr("style", this.getAttribute("style"));
-                $gallery.fadeIn(100);
-                $("#hidgalley").val("NM");
             });
             var indexmch;
             $uploaderFiles_MCH.on("click", "li", function () {
@@ -255,21 +225,13 @@
             $(".weui-gallery__del").click(function () {
                 var hidgalley = $("#hidgalley").val();
                 switch (hidgalley) {
+                    case "XHTZ":
+                        $uploaderFiles.find("li").eq(index).remove();
+                        img_XHTZarr.splice(index, 1);
+                        break;
                     case "UV":
                         $uploaderFiles.find("li").eq(index).remove();
                         img_UVarr.splice(index, 1);
-                        break;
-                        //case "ZW":
-                        //    $uploaderFiles_ZM.find("li").eq(indexzm).remove();
-                        //    img_ZMarr.splice(indexzm, 1);
-                        //    break;
-                    case "VL":
-                        $uploaderFiles_VL.find("li").eq(indexvl).remove();
-                        img_VLarr.splice(indexvl, 1);
-                        break;
-                    case "IR":
-                        $uploaderFiles_IR.find("li").eq(indexir).remove();
-                        img_VLarr.splice(indexir, 1);
                         break;
                     case "ZH":
                         $uploaderFiles_ZH.find("li").eq(indexzh).remove();
@@ -290,10 +252,6 @@
                     case "CS":
                         $uploaderFiles_CS.find("li").eq(indexcs).remove();
                         img_CSarr.splice(indexcs, 1);
-                        break;
-                    case "NM":
-                        $uploaderFiles_NM.find("li").eq(indexnm).remove();
-                        img_NMarr.splice(indexnm, 1);
                         break;
                     case "MCH":
                         $uploaderFiles_MCH.find("li").eq(indexmch).remove();
@@ -440,17 +398,11 @@
         function addImgArr(msg) {
             var hidgalley = $("#hidgalley").val();
             switch (hidgalley) {
+                case "XHTZ":
+                    img_XHTZarr.push(msg);
+                    break;
                 case "UV":
                     img_UVarr.push(msg);
-                    break;
-                case "ZW":
-                    img_ZMarr.push(msg);
-                    break;
-                case "VL":
-                    img_VLarr.push(msg);
-                    break;
-                case "IR":
-                    img_IRarr.push(msg);
                     break;
                 case "ZH":
                     img_ZHarr.push(msg);
@@ -466,9 +418,6 @@
                     break;
                 case "CS":
                     img_CSarr.push(msg);
-                    break;
-                case "NM":
-                    img_NMarr.push(msg);
                     break;
                 case "MCH":
                     img_MCHarr.push(msg);
@@ -520,15 +469,13 @@
             
             var $form = $("#form1").formSerialize();
             console.log($form);
+            $form["XHTZ_Images"] = img_XHTZarr.join(";");
             $form["UV_Images"] = img_UVarr.join(";");
-            $form["VL_Images"] = img_VLarr.join(";");
-            $form["IR_Images"] = img_IRarr.join(";");
             $form["HD_ZH_Images"] = img_ZHarr.join(";");
             $form["HD_BLH_Images"] = img_BLHarr.join(";");
             $form["HD_ABJH_Images"] = img_ABJHarr.join(";");
             $form["YD_YD_Images"] = img_YDarr.join(";");
             $form["SDJ_CS_Images"] = img_CSarr.join(";");
-            $form["SDJ_NM_Images"] = img_NMarr.join(";");
             $form["SDJ_MCH_Images"] = img_MCHarr.join(";");
             $form["ZWY_ZM_Images"] = img_ZMarr.join(";"); 
             $form["ZWY_BM_Images"] = img_BMarr.join(";");
@@ -611,15 +558,13 @@
             }
             var $form = $("#form1").formSerialize();
 
+            $form["XHTZ_Images"] = img_XHTZarr.join(";");
             $form["UV_Images"] = img_UVarr.join(";");
-            $form["VL_Images"] = img_VLarr.join(";");
-            $form["IR_Images"] = img_IRarr.join(";");
             $form["HD_ZH_Images"] = img_ZHarr.join(";");
             $form["HD_BLH_Images"] = img_BLHarr.join(";");
             $form["HD_ABJH_Images"] = img_ABJHarr.join(";");
             $form["YD_YD_Images"] = img_YDarr.join(";");
             $form["SDJ_CS_Images"] = img_CSarr.join(";");
-            $form["SDJ_NM_Images"] = img_NMarr.join(";");
             $form["SDJ_MCH_Images"] = img_MCHarr.join(";");
             $form["ZWY_ZM_Images"] = img_ZMarr.join(";");
 
@@ -695,34 +640,21 @@
         function CheckSubmit() {
             var $form = $("#form1").formSerialize();
             // alert(JSON.stringify( $form));
-
             var UV = $form["UV"];
-
             if (UV == "") {
                 $.toptip('UV不能为空', 'error');
                 return false;
             }
-
-            var VL = $form["VL"];
-            if (VL == "") {
-                $.toptip('VL不能为空', 'error');
-                return false;
-            }
-            var IR = $form["IR"];
-            if (IR == "") {
-                $.toptip('IR不能为空', 'error');
-                return false;
-            }
-            var HD_ZH = $form["HD_ZH"];
-            if (HD_ZH == "") {
-                $.toptip('总厚不能为空', 'error');
-                return false;
-            }
-            var HD_BLH = $form["HD_BLH"];
-            if (HD_BLH == "") {
-                $.toptip('玻璃厚不能为空', 'error');
-                return false;
-            }
+            //var HD_ZH = $form["HD_ZH"];
+            //if (HD_ZH == "") {
+            //    $.toptip('总厚不能为空', 'error');
+            //    return false;
+            //}
+            //var HD_BLH = $form["HD_BLH"];
+            //if (HD_BLH == "") {
+            //    $.toptip('玻璃厚不能为空', 'error');
+            //    return false;
+            //}
 
             //var HD_ABJH = $form["HD_ABJH"];
             //if (HD_ABJH == "") {
@@ -752,27 +684,22 @@
             //}
 
             // var img_ZMarr = [];
+            if (img_XHTZarr.length <= 0) {
+                $.toptip('型号图纸需上传图片', 'error');
+                return false;
+            };
             if (img_UVarr.length <= 0) {
                 $.toptip('UV需上传图片', 'error');
                 return false;
             };
-            if (img_VLarr.length <= 0) {
-                $.toptip('VL需上传图片', 'error');
-                return false;
-            };
-
-            if (img_IRarr.length <= 0) {
-                $.toptip('IR需上传图片', 'error');
-                return false;
-            };
-            if (img_ZHarr.length <= 0) {
-                $.toptip('总厚需上传图片', 'error');
-                return false;
-            };
-            if (img_BLHarr.length <= 0) {
-                $.toptip('玻璃厚需上传图片', 'error');
-                return false;
-            };
+            //if (img_ZHarr.length <= 0) {
+            //    $.toptip('总厚需上传图片', 'error');
+            //    return false;
+            //};
+            //if (img_BLHarr.length <= 0) {
+            //    $.toptip('玻璃厚需上传图片', 'error');
+            //    return false;
+            //};
             //if (img_ABJHarr.length <= 0) {
             //    $.toptip('AB胶需上传图片', 'error');
             //    return false;
@@ -785,11 +712,6 @@
                 $.toptip('初始需上传图片', 'error');
                 return false;
             }
-            //if (img_NMarr.length <= 0) {
-            //    $.toptip('耐磨需上传图片', 'error');
-            //    return false;
-            //}
-
             //if (img_MCHarr.length <= 0) {
             //    $.toptip('摩擦后需上传图片', 'error');
             //    return false;
@@ -810,15 +732,15 @@
             //    return false;
             //}
 
-            if (img_WBarr.length <= 0) {
-                $.toptip('弯爆需上传图片', 'error');
-                return false;
-            }
+            //if (img_WBarr.length <= 0) {
+            //    $.toptip('弯爆需上传图片', 'error');
+            //    return false;
+            //}
 
-            if (img_STarr.length <= 0) {
-                $.toptip('试贴需上传图片', 'error');
-                return false;
-            }
+            //if (img_STarr.length <= 0) {
+            //    $.toptip('试贴需上传图片', 'error');
+            //    return false;
+            //}
             var Size_Long = $form["Size_Long"];
             if (Size_Long == "") {
                 $.toptip('长不能为空', 'error');
@@ -994,12 +916,6 @@
                                 if (retdata.UV_Images != "") {
                                     addImgli("UV", retdata.UV_Images);
                                 }
-                                if (retdata.VL_Images != "") {
-                                    addImgli("VL", retdata.VL_Images);
-                                }
-                                if (retdata.IR_Images != "") {
-                                    addImgli("IR", retdata.IR_Images);
-                                }
                                 if (retdata.HD_ZH_Images != "") {
                                     addImgli("ZH", retdata.HD_ZH_Images);
                                 }
@@ -1014,9 +930,6 @@
                                 }
                                 if (retdata.SDJ_CS_Images != "") {
                                     addImgli("CS", retdata.SDJ_CS_Images);
-                                }
-                                if (retdata.SDJ_NM_Images != "") {
-                                    addImgli("NM", retdata.SDJ_NM_Images);
                                 }
                                 if (retdata.SDJ_MCH_Images != "") {
                                     addImgli("MCH", retdata.SDJ_MCH_Images);
@@ -1118,47 +1031,6 @@
                 </div>\
                 </div>\
                 '
-//            var html1 = "<div class=\"weui-cell GQLXXXDIV\">" +
-//"                        <div class=\"weui-cell_hd\">" +
-//"                            <label for=\"\" class=\"weui-label\">钢球落下详细</label>" +
-//"                        </div>" +
-//"                        <div class=\"weui-cell\">" +
-//"                            <label for=\"\" class=\"weui-label\">高度</label>" +
-//"                            <input class=\"GD\" type=\"text\" value=\"" + parma.GD + "\" list=\"high\" />" +
-//"                        </div>" +
-//"                        <div class=\"weui-cell\">" +
-//"                            <label for=\"\" class=\"weui-label\">球重</label>" +
-//"                            <input class=\"QZ\" type=\"text\" value=\"" + parma.QZ + "\" list=\"height\" />" +
-//"                        </div>" +
-//"                        <div class=\"weui-cell\">" +
-//"                            <label for=\"\" class=\"weui-label\">治具</label>" +
-//"                            <input class=\"ZJ\" type=\"text\" value=\"" + parma.ZJ + "\" list=\"matrie\" />" +
-//"                        </div>" +
-//"                        <div class=\"weui-cell\">" +
-//"                            <label for=\"\" class=\"weui-label weui-cell__hd\">检测数量</label>" +
-//"                            <input class=\"weui-input weui-cell__bd JCSL\" type=\"number\" pattern=\"[0-9]*\" value=\"" + parma.JCSL + "\" placeholder=\"\">" +
-//"                        </div>" +
-//"                         <div class=\"weui-cell\">" +
-//"                            <label for=\"\" class=\"weui-label weui-cell__hd \">通过数量</label>" +
-//"                            <input class=\"weui-input weui-cell__bd TGSL\" type=\"number\" pattern=\"[0-9]*\" value=\"" + parma.TGSL + "\" placeholder=\"\">" +
-//"                        </div>" +
-//"                        <div class=\"weui-cell\">" +
-//"                            <div class=\"weui-uploader imgspace\">" +
-//"                                <div class=\"weui-uploader__bd\">" +
-//"                                    图片上传 &nbsp;" +
-//"                                    <ul class=\"weui-uploader__files uploaderFilesimg_GQLX\" >" +
-//                                     li+
-//"                                    </ul>"+
-//"                                    <div class=\"weui-uploader__input-box\">" +
-//"                                        <input  class=\"weui-uploader__input zjxfjs_file uploaderInputimg_GQLX\" type=\"file\" accept=\"image/*\" multiple=\"\">" +
-//"                                    </div>" +
-//"                                </div>" +
-//"                            </div>" +
-//"                        </div>" +
-//"                        <div class=\"weui-cell\">" +
-//"                        <a href=\"javascript:;\" class=\"weui-btn weui-btn_disabled weui-btn_default GQLX_delete\">删除</a>" +
-//"                        </div>" +
-//"                        </div>";
             $("#GHXG_list").append(html);
             $(".GQLX_delete:last").click(function () {
                 $(this).parent().parent().remove();
@@ -1353,12 +1225,6 @@
                 case "UV":
                     img_UVarr.push(msg);
                     break; 
-                case "VL":
-                    img_VLarr.push(msg);
-                    break;
-                case "IR":
-                    img_IRarr.push(msg);
-                    break;
                 case "ZH":
                     img_ZHarr.push(msg);
                     break;
@@ -1373,9 +1239,6 @@
                     break;
                 case "CS":
                     img_CSarr.push(msg);
-                    break;
-                case "NM":
-                    img_NMarr.push(msg);
                     break;
                 case "MCH":
                     img_MCHarr.push(msg);
@@ -1543,6 +1406,23 @@
                 <h1>检验结果↓↓<a  href="javascript:" onclick="openCheckStd()" style="font-size:small" >查看检验标准</a></h1>
             </div>
             <div class="weui-panel__bd">
+                <div class="weui-cells__tips tltles">型号图纸拍照</div>
+                <div class="weui-cells weui-cells_form" style="margin-top: 0">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <div class="weui-uploader imgspace">
+                                <div class="weui-uploader__bd">
+                                    图片上传 &nbsp;
+                                    <ul class="weui-uploader__files" id="uploaderFilesimg_XHTZ">
+                                    </ul>
+                                    <div class="weui-uploader__input-box">
+                                        <input id="uploaderInputimg_XHTZ" class="weui-uploader__input zjxfjs_file" type="file" accept="image/*" multiple="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="weui-cells__tips tltles">透光率(%)</div>
                 <div class="weui-cells weui-cells_form" style="margin-top: 0">
@@ -1555,6 +1435,27 @@
                             
                         </div>
 
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd   ">
+                            <label class="weui-label">VL(%)</label>
+                        </div>
+                        <div class="myOwn">
+                            <input class="weui-input" type="NUMBER" placeholder="VL" name="VL" id="VL" onkeyup="this.value = this.value.replace(/[^\d\.]/g,'')" onafterpaste="this.value = this.value.replace(/[^\d\.]/g, '')">
+                        </div>
+
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">IR(%)</label>
+                        </div>
+                        <div class="myOwn">
+                            <input class="weui-input" type="NUMBER" placeholder="IR" name="IR" id="IR" onkeyup="this.value = this.value.replace(/[^\d\.]/g,'')" onafterpaste="this.value = this.value.replace(/[^\d\.]/g, '')">
+                        </div>
+
+                    </div>
+
+                    <div class="weui-cell">
                         <div class="weui-cell__bd">
                             <div class="weui-uploader imgspace">
 
@@ -1568,54 +1469,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd   ">
-                            <label class="weui-label">VL(%)</label>
-                        </div>
-                        <div class="myOwn">
-                            <input class="weui-input" type="NUMBER" placeholder="VL" name="VL" id="VL" onkeyup="this.value = this.value.replace(/[^\d\.]/g,'')" onafterpaste="this.value = this.value.replace(/[^\d\.]/g, '')">
-                        </div>
-                        <div class="weui-cell__bd">
-                            <div class="weui-uploader imgspace">
-
-                                <div class="weui-uploader__bd">
-                                    图片上传 &nbsp;
-                                    <ul class="weui-uploader__files" id="uploaderFilesimg_VL">
-                                    </ul>
-                                    <div class="weui-uploader__input-box">
-                                        <input id="uploaderInputimg_VL" class="weui-uploader__input zjxfjs_file" type="file" accept="image/*" multiple="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <label class="weui-label">IR(%)</label>
-                        </div>
-                        <div class="myOwn">
-                            <input class="weui-input" type="NUMBER" placeholder="IR" name="IR" id="IR" onkeyup="this.value = this.value.replace(/[^\d\.]/g,'')" onafterpaste="this.value = this.value.replace(/[^\d\.]/g, '')">
-                        </div>
-
-                        <div class="weui-cell__bd">
-                            <div class="weui-uploader imgspace">
-
-                                <div class="weui-uploader__bd">
-                                    图片上传 &nbsp;
-                                    <ul class="weui-uploader__files" id="uploaderFilesimg_IR">
-                                    </ul>
-                                    <div class="weui-uploader__input-box">
-                                        <input id="uploaderInputimg_IR" class="weui-uploader__input zjxfjs_file" type="file" accept="image/*" multiple="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
 
@@ -1740,30 +1593,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="weui-cell">
-                        <div class="weui-cell__hd">
-                            <label class="weui-label">耐磨</label>
-                        </div>
-                        <div class="myOwn">
-                            <input class="weui-input" type="number" id="SDJ_NM" name="SDJ_NM" placeholder="耐磨" onkeyup="this.value = this.value.replace(/[^\d\.]/g,'')" onafterpaste="this.value = this.value.replace(/[^\d\.]/g, '')">
-                        </div>
-
-                        <div class="weui-cell__bd">
-                            <div class="weui-uploader imgspace">
-
-                                <div class="weui-uploader__bd">
-                                    图片上传 &nbsp;
-                                    <ul class="weui-uploader__files" id="uploaderFilesimg_NM">
-                                    </ul>
-                                    <div class="weui-uploader__input-box">
-                                        <input id="uploaderInputimg_NM" class="weui-uploader__input zjxfjs_file" type="file" accept="image/*" multiple="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
 
                     <div class="weui-cell">
@@ -1997,30 +1826,47 @@
 
                 <div class="weui-cells__tips tltles">平整度</div>
                 <div class="weui-cells weui-cells_form">
-                    <div class="weui-cell">
-                         <div class="weui-cell__hd">
-                                <label for="" class="weui-label">检验结果</label>
+                    <div class="weui-cell_bd">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                    <label for="" class="weui-label">厚度</label>
+                            </div>
+                            <div class="myOwn">
+                                <select id="PC_HD" class="weui-select" name="PC_HD">
+                                    <option value="0">请选择</option>
+                                    <option value="0.2">0.2</option>
+                                    <option value="0.3">0.3</option>
+                                    <option value="0.4">0.4</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="myOwn">
-                            <select id="PC_PC" class="weui-select" name="PC_PC">
-                                <option value="0">请选择</option>
-                                <option value="Ture">合格</option>
-                                <option value="False">不合格</option>
-                            </select>
-                        </div>
-                        <div class="weui-cell__bd">
-                            <div class="weui-uploader imgspace">
 
-                                <div class="weui-uploader__bd">
-                                    图片上传 &nbsp;
-                                    <ul class="weui-uploader__files" id="uploaderFilesimg_PC">
-                                    </ul>
-                                    <div class="weui-uploader__input-box">
-                                        <input id="uploaderInputimg_PC" class="weui-uploader__input zjxfjs_file" type="file" accept="image/*" multiple="">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd">
+                                    <label for="" class="weui-label">检验结果</label>
+                            </div>
+                            <div class="myOwn">
+                                <select id="PC_PC" class="weui-select" name="PC_PC">
+                                    <option value="0">请选择</option>
+                                    <option value="Ture">合格</option>
+                                    <option value="False">不合格</option>
+                                </select>
+                            </div>
+                            <div class="weui-cell__bd">
+                                <div class="weui-uploader imgspace">
+
+                                    <div class="weui-uploader__bd">
+                                        图片上传 &nbsp;
+                                        <ul class="weui-uploader__files" id="uploaderFilesimg_PC">
+                                        </ul>
+                                        <div class="weui-uploader__input-box">
+                                            <input id="uploaderInputimg_PC" class="weui-uploader__input zjxfjs_file" type="file" accept="image/*" multiple="">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <%--<div class="weui-cells weui-cells_form">
